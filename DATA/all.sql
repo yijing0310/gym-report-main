@@ -77,17 +77,20 @@ CREATE TABLE gyms (
   contact_info VARCHAR(50),               
   email VARCHAR(255),  -- 電子郵件
   manager VARCHAR(50),  -- 負責人
+  image_url VARCHAR(255),  -- 新增圖片 URL 欄位
+  google_map_link VARCHAR(255),  -- 新增 Google 地圖連結
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- 自動記錄創建時間
 );
 
+
 -- 插入資料，營業星期作為逗號分隔字串
-INSERT INTO gyms (name, address, business_days, opening_hours, closing_hours, description, contact_info, email, manager)
+INSERT INTO gyms (name, address, business_days, opening_hours, closing_hours, description, contact_info, email, manager, image_url, google_map_link)
 VALUES
-('健身房A', '台南市中華東路100號', 'Monday, Tuesday, Wednesday, Thursday, Friday', '08:00:00', '22:00:00', '提供各類健身器材，適合健身初學者與進階者使用，並提供專業指導課程。', '06-1234-5678', 'contactA@gym.com', '王大明'),
-('健身房B', '台南市永康區中正路200號', 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday', '07:00:00', '23:00:00', '擁有先進的重訓設備及寬敞的游泳池，設有個人化健身計劃設計服務。', '06-2345-6789', 'contactB@gym.com', '李小華'),
-('健身房C', '台南市安平區建國路300號', 'Tuesday, Wednesday, Thursday, Friday, Saturday', '06:30:00', '21:30:00', '提供多樣的有氧運動課程及高效的跑步機，環境清新舒適。', '06-3456-7890', 'contactC@gym.com', '張志強'),
-('健身房D', '台南市北區成功路400號', 'Monday, Wednesday, Friday, Saturday', '09:00:00', '20:00:00', '專業拳擊訓練課程、自由重訓區，專注於力量與耐力的提升。', '06-4567-8901', 'contactD@gym.com', '陳美麗'),
-('健身房E', '台南市西區府前路500號', 'Monday, Tuesday, Wednesday, Thursday, Friday', '08:00:00', '22:30:00', '提供各式團體課程及無氧設備，讓您更有效率地達成健身目標。', '06-5678-9012', 'contactE@gym.com', '林俊杰');
+('健身房A', '台南市中華東路100號', 'Monday, Tuesday, Wednesday, Thursday, Friday', '08:00:00', '22:00:00', '提供各類健身器材，適合健身初學者與進階者使用，並提供專業指導課程。', '06-1234-5678', 'contactA@gym.com', '王大明', 'https://example.com/images/gymA.jpg', 'https://goo.gl/maps/abc123'),
+('健身房B', '台南市永康區中正路200號', 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday', '07:00:00', '23:00:00', '擁有先進的重訓設備及寬敞的游泳池，設有個人化健身計劃設計服務。', '06-2345-6789', 'contactB@gym.com', '李小華', 'https://example.com/images/gymB.jpg', 'https://goo.gl/maps/def456'),
+('健身房C', '台南市安平區建國路300號', 'Tuesday, Wednesday, Thursday, Friday, Saturday', '06:30:00', '21:30:00', '提供多樣的有氧運動課程及高效的跑步機，環境清新舒適。', '06-3456-7890', 'contactC@gym.com', '張志強', 'https://example.com/images/gymC.jpg', 'https://goo.gl/maps/ghi789'),
+('健身房D', '台南市北區成功路400號', 'Monday, Wednesday, Friday, Saturday', '09:00:00', '20:00:00', '專業拳擊訓練課程、自由重訓區，專注於力量與耐力的提升。', '06-4567-8901', 'contactD@gym.com', '陳美麗', 'https://example.com/images/gymD.jpg', 'https://goo.gl/maps/jkl012'),
+('健身房E', '台南市西區府前路500號', 'Monday, Tuesday, Wednesday, Thursday, Friday', '08:00:00', '22:30:00', '提供各式團體課程及無氧設備，讓您更有效率地達成健身目標。', '06-5678-9012', 'contactE@gym.com', '林俊杰', 'https://example.com/images/gymE.jpg', 'https://goo.gl/maps/mno345');
 
 -- 文章列表 
 CREATE TABLE articles (
@@ -143,132 +146,199 @@ INSERT INTO gym_news (title, content, author_id, uploadStatus, created_at, updat
 ('健身房即將舉辦公益活動', '健身房將於下個月舉辦公益活動，邀請大家來一起參加，為社區貢獻愛心。', 'a2025001', 0);
 
 
--- 訂單
-CREATE TABLE orders (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,         
-    member_id INT NOT NULL,          -- 外鍵，參照 member 資料表                   
-    total_amount DECIMAL(10, 2) NOT NULL,             
-    status VARCHAR(50) NOT NULL,                      
-    self_pickup_store TEXT NOT NULL,                  
-    payment_method VARCHAR(50) NOT NULL,             
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
-    
+USE gym_database;
+
+CREATE TABLE member_basic (
+    member_id INT AUTO_INCREMENT PRIMARY KEY,
+     member_name VARCHAR(100),
+    birthday DATE,
+    gender ENUM('male', 'female'),
+    phone VARCHAR(20),
+    address VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-desc orders;
-#drop table orders;
 
-INSERT INTO orders (member_id, total_amount, status, self_pickup_store, payment_method)
+
+
+INSERT INTO member_basic (member_name, birthday, gender, phone, address) 
 VALUES
-(1, 150.00, 'pending', '台南市中西區永華路一段100號', '信用卡'),
-(2, 250.50, 'completed', '台南市東區東安路200號', '現金'),
-(3, 99.99, 'canceled', '台南市北區公園路300號', '信用卡'),
-(4, 300.00, 'pending', '台南市安平區健康路400號', '現金'),
-(5, 450.75, 'completed', '台南市南區大同路500號', '信用卡'),
-(6, 120.00, 'pending', '台南市新營區中正路600號', '現金'),
-(7, 200.50, 'completed', '台南市永康區文化路700號', '信用卡'),
-(8, 330.00, 'canceled', '台南市安南區城北路800號', '現金'),
-(9, 175.25, 'pending', '台南市歸仁區中山路900號', '信用卡'),
-(10, 550.00, 'completed', '台南市仁德區成功路1000號', '現金'),
-(11, 120.75, 'pending', '台南市佳里區民生路1100號', '信用卡'),
-(12, 300.50, 'completed', '台南市麻豆區中山路1200號', '現金'),
-(13, 410.00, 'pending', '台南市新化區和平路1300號', '信用卡'),
-(14, 95.99, 'canceled', '台南市柳營區中正路1400號', '現金'),
-(15, 210.00, 'completed', '台南市官田區和平路1500號', '信用卡'),
-(16, 305.75, 'pending', '台南市鹽水區民權路1600號', '現金'),
-(17, 480.00, 'completed', '台南市善化區中山路1700號', '信用卡'),
-(18, 150.00, 'canceled', '台南市新市區中正路1800號', '現金'),
-(19, 225.50, 'pending', '台南市大內區中華路1900號', '信用卡'),
-(20, 310.00, 'completed', '台南市玉井區中正路2000號', '現金'),
-(21, 95.75, 'pending', '台南市楠西區中山路2100號', '信用卡'),
-(22, 215.00, 'completed', '台南市左鎮區中華路2200號', '現金'),
-(23, 405.00, 'pending', '台南市南化區中正路2300號', '信用卡'),
-(24, 310.99, 'canceled', '台南市白河區中山路2400號', '現金'),
-(25, 220.00, 'completed', '台南市東山區民權路2500號', '信用卡'),
-(26, 500.75, 'pending', '台南市六甲區和平路2600號', '現金'),
-(27, 130.00, 'completed', '台南市後壁區中華路2700號', '信用卡'),
-(28, 345.25, 'canceled', '台南市七股區中山路2800號', '現金'),
-(29, 290.00, 'pending', '台南市將軍區中正路2900號', '信用卡'),
-(30, 425.50, 'completed', '台南市北門區中華路3000號', '現金');
+('張大明', '1990-01-15', 'male', '0912345678', '台北市信義區松山路123號'),
+('李小美', '1985-03-22', 'female', '0912345679', '台中市西區建國路456號'),
+('王志明', '1992-06-18', 'male', '0912345680', '高雄市左營區自由路789號'),
+('陳怡君', '1988-11-02', 'female', '0912345681', '新北市板橋區中正路101號'),
+('林子明', '1995-02-10', 'male', '0912345682', '桃園市中壢區忠孝路234號'),
+('黃怡婷', '1993-05-25', 'female', '0912345683', '台北市大安區復興南路567號'),
+('劉建國', '1980-07-30', 'male', '0912345684', '台中市南區建國路890號'),
+('許思萱', '1994-10-05', 'female', '0912345685', '高雄市三民區大順路123號'),
+('張家瑜', '1989-09-17', 'male', '0912345686', '台南市東區中華路456號'),
+('李芷涵', '1996-12-03', 'female', '0912345687', '新北市三重區正義路789號'),
+('周小鵬', '1992-07-30', 'male', '0912345688', '台北市內湖區港墘路234號'),
+('劉思華', '1991-03-17', 'female', '0912345689', '高雄市苓雅區和平路567號'),
+('陳宏志', '1987-05-24', 'male', '0912345690', '台中市北區崇德路890號'),
+('林心如', '1994-11-09', 'female', '0912345691', '新竹市東區光復路123號'),
+('鄭永成', '1993-01-05', 'male', '0912345692', '台南市西區府前路456號'),
+('楊麗華', '1986-09-29', 'female', '0912345693', '台北市松山區南京東路789號'),
+('張家豪', '1990-12-20', 'male', '0912345694', '新北市中和區建國路123號'),
+('王美霞', '1995-07-12', 'female', '0912345695', '高雄市左營區忠孝路456號'),
+('林明杰', '1988-10-17', 'male', '0912345696', '台中市西區民權路789號'),
+('黃怡文', '1996-08-02', 'female', '0912345697', '新竹市北區光華路123號'),
+('周建中', '1994-04-13', 'male', '0912345698', '高雄市前鎮區中山路456號'),
+('張晨輝', '1990-11-25', 'female', '0912345699', '台北市大同區重慶北路789號'),
+('陳健熙', '1987-03-08', 'male', '0912345700', '台中市南區建國路123號'),
+('林麗瑄', '1993-06-14', 'female', '0912345701', '台南市中西區府前路456號'),
+('劉俊傑', '1991-02-19', 'male', '0912345702', '新北市汐止區樹林路789號'),
+('王曉雯', '1994-09-10', 'female', '0912345703', '台中市東區中華路123號'),
+('李信豪', '1995-11-15', 'male', '0912345704', '台北市中正區南京東路456號'),
+('周佳儀', '1989-08-22', 'female', '0912345705', '高雄市鳳山區建國路789號'),
+('張子堯', '1993-04-05', 'male', '0912345706', '台南市東區中華路123號'),
+('李秋儀', '1991-02-10', 'female', '0912345707', '新北市板橋區中正路234號'),
+('楊紫婷', '1992-07-30', 'male', '0912345708', '高雄市左營區自由路789號'),
+('王子豪', '1994-06-19', 'female', '0912345709', '台北市內湖區民權東路456號');
 
-select * from orders;
-#delete from orders;
+select * from member_basic;
 
--- 訂單物件
-CREATE TABLE order_items (
-    order_item_id INT AUTO_INCREMENT PRIMARY KEY, 
-    order_id INT NOT NULL,                        -- 外鍵，參照 orders 資料表
-    product_id INT NOT NULL,                      -- 外鍵，參照 products 資料表
-    quantity INT NOT NULL,                        -- 商品數量
-    total_price DECIMAL(10, 2) NOT NULL,          -- 商品總金額
-    rental_days INT NOT NULL,                     -- 租借天數
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 訂單項目建立時間
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 訂單項目更新時間
-    
+
+
+CREATE TABLE Products (
+    id INT AUTO_INCREMENT PRIMARY KEY,           -- 主鍵
+    product_code VARCHAR(10) NOT NULL UNIQUE,    -- 商品編號 (格式 P001, P002...)
+    name VARCHAR(255) NOT NULL,                 -- 商品名稱
+    description TEXT,                           -- 商品描述
+    category_name VARCHAR(255) NOT NULL,        -- 商品種類名稱
+    weight DECIMAL(5, 2),                       -- 商品重量 (可為 NULL)
+    base_price DECIMAL(10, 2) NOT NULL,         -- 商品基本價格
+    image_url VARCHAR(255),                     -- 圖片路徑或網址
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 建立時間
 );
--- FOREIGN KEY (order_id) REFERENCES orders(order_id), -- 設定外鍵
--- FOREIGN KEY (product_id) REFERENCES products(product_id) -- 設定外鍵
 
-INSERT INTO order_items (order_id, product_id, quantity, total_price, rental_days, created_at, updated_at)
+INSERT INTO Products (product_code, name, description, category_name, weight, base_price, image_url)
 VALUES
-(1, 101, 2, 300.00, 3, '2025-01-10 10:00:00', '2025-01-10 10:00:00'),
-(2, 102, 1, 150.00, 2, '2025-01-10 11:00:00', '2025-01-10 11:00:00'),
-(3, 103, 3, 450.00, 5, '2025-01-11 09:30:00', '2025-01-11 09:30:00'),
-(4, 104, 1, 120.00, 1, '2025-01-11 14:20:00', '2025-01-11 14:20:00'),
-(5, 105, 2, 250.00, 2, '2025-01-12 08:00:00', '2025-01-12 08:00:00'),
-(6, 106, 4, 600.00, 6, '2025-01-12 15:30:00', '2025-01-12 15:30:00'),
-(7, 107, 2, 500.00, 4, '2025-01-13 13:45:00', '2025-01-13 13:45:00'),
-(8, 108, 3, 330.00, 3, '2025-01-13 16:10:00', '2025-01-13 16:10:00'),
-(9, 109, 1, 200.00, 2, '2025-01-14 09:20:00', '2025-01-14 09:20:00'),
-(10, 110, 5, 750.00, 5, '2025-01-14 12:00:00', '2025-01-14 12:00:00'),
-(11, 111, 2, 400.00, 4, '2025-01-15 10:30:00', '2025-01-15 10:30:00'),
-(12, 112, 1, 150.00, 3, '2025-01-15 11:45:00', '2025-01-15 11:45:00'),
-(13, 113, 3, 450.00, 6, '2025-01-16 14:10:00', '2025-01-16 14:10:00'),
-(14, 114, 2, 240.00, 2, '2025-01-16 16:00:00', '2025-01-16 16:00:00'),
-(15, 115, 1, 180.00, 3, '2025-01-17 09:00:00', '2025-01-17 09:00:00'),
-(16, 116, 4, 600.00, 6, '2025-01-17 10:45:00', '2025-01-17 10:45:00'),
-(17, 117, 2, 420.00, 4, '2025-01-18 11:30:00', '2025-01-18 11:30:00'),
-(18, 118, 3, 360.00, 3, '2025-01-18 14:00:00', '2025-01-18 14:00:00'),
-(19, 119, 1, 150.00, 2, '2025-01-19 12:20:00', '2025-01-19 12:20:00'),
-(20, 120, 2, 300.00, 3, '2025-01-19 15:10:00', '2025-01-19 15:10:00');
+-- 健身用品類別
+('P001', '跑步機', '高性能跑步機，適合各種健身需求。', '健身用品', NULL, 150.00, 'images/treadmill.jpg'),
+('P002', '啞鈴 8 公斤', '適合中等強度力量訓練。', '健身用品', 8.00, 50.00, 'images/dumbbell_set.jpg'),
+('P003', '啞鈴 10 公斤', '適合中等強度力量訓練。', '健身用品', 10.00, 70.00, 'images/exercise_bike.jpg'),
+('P004', '阻力帶', '耐用多功能的阻力帶套裝。', '健身用品', NULL, 20.00, 'images/resistance_bands.jpg'),
+('P005', '壺鈴 4 公斤', '適合輕量訓練的壺鈴。', '健身用品', 4.00, 20.00, 'images/kettlebell_4kg.jpg'),
+('P006', '壺鈴 8 公斤', '適合中等強度訓練的壺鈴。', '健身用品', 8.00, 40.00, 'images/kettlebell_8kg.jpg'),
+('P007', '壺鈴 12 公斤', '適合進階力量訓練的壺鈴。', '健身用品', 12.00, 60.00, 'images/kettlebell_12kg.jpg'),
+('P008', '壺鈴 16 公斤', '適合進階力量訓練的壺鈴。', '健身用品', 16.00, 80.00, 'images/kettlebell_set.jpg'),
+('P009', '橢圓機', '適合全身鍛煉的橢圓機。', '健身用品', NULL, 220.00, 'images/elliptical_machine.jpg'),
+('P010', '握力訓練器', '提升握力的便攜設備。', '健身用品', NULL, 15.00, 'images/grip_trainer.jpg'),
+('P011', '跳繩', '高性能跳繩，適合快速訓練。', '健身用品', NULL, 10.00, 'images/jump_rope.jpg'),
+('P012', '深蹲架', '適合深蹲和重量訓練的高強度架子。', '健身用品', NULL, 300.00, 'images/squat_rack.jpg'),
+('P013', '重量訓練椅', '多角度可調節的重量訓練椅。', '健身用品', NULL, 100.00, 'images/weight_bench.jpg'),
+('P014', '泡沫滾筒', '高密度泡沫滾筒，幫助肌肉放鬆。', '健身用品', NULL, 15.00, 'images/foam_roller.jpg'),
+('P015', '腹肌滾輪', '輕便設計，專為腹部核心訓練設計。', '健身用品', NULL, 25.00, 'images/ab_roller.jpg'),
+('P016', '槓鈴 10 公斤', '適合輕量級力量訓練的槓鈴。', '健身用品', 10.00, 50.00, 'images/barbell_10kg.jpg'),
+('P017', '槓鈴 20 公斤', '適合進階力量訓練的槓鈴。', '健身用品', 20.00, 70.00, 'images/barbell_20kg.jpg'),
+('P018', '核心訓練板', '提升核心穩定性的專業訓練設備。', '健身用品', NULL, 50.00, 'images/core_trainer.jpg'),
+('P019', '阻力帶套裝', '多種阻力級別，適合全身鍛煉。', '健身用品', NULL, 25.00, 'images/resistance_band_set.jpg'),
+('P020', '健身腳踏車', '安靜且舒適的室內健身腳踏車。', '健身用品', NULL, 120.00, 'images/exercise_bike.jpg'),
 
 
-select * from order_items;
-# drop table order_items;
+-- 拳擊用品類別
+('P021', '拳擊手套', '高品質拳擊手套，適合訓練或比賽。', '拳擊用品', NULL, 45.00, 'images/boxing_gloves.jpg'),
+('P022', '沙袋 10 公斤', '適合初學者的輕型拳擊沙袋。', '拳擊用品', 10.00, 50.00, 'images/light_punching_bag.jpg'),
+('P023', '沙袋 20 公斤', '適合進階訓練的中型拳擊沙袋。', '拳擊用品', 20.00, 80.00, 'images/medium_punching_bag.jpg'),
+('P024', '速度球', '輕巧且靈活的拳擊速度球。', '拳擊用品', NULL, 30.00, 'images/speed_bag.jpg'),
+('P025', '拳擊靶', '適合快速拳擊訓練的靶子。', '拳擊用品', NULL, 25.00, 'images/focus_mitts.jpg'),
+('P026', '拳擊反應球', '提高速度和敏捷度的拳擊訓練設備。', '拳擊用品', NULL, 12.00, 'images/reflex_ball.jpg'),
+('P027', '護齒套裝', '耐用舒適的拳擊護齒套裝。', '拳擊用品', NULL, 8.00, 'images/mouth_guard_set.jpg'),
+('P028', '拳擊計時器', '幫助設置訓練時間的電子計時器。', '拳擊用品', NULL, 30.00, 'images/boxing_timer.jpg'),
+('P029', '拳擊護腕', '高支撐力的專業拳擊護腕。', '拳擊用品', NULL, 15.00, 'images/boxing_wrist_guard.jpg'),
+('P030', '沙袋支架', '用於固定拳擊沙袋的耐用支架。', '拳擊用品', NULL, 90.00, 'images/bag_stand.jpg'),
 
--- 付款方式
-CREATE TABLE payments (
-    payment_id INT AUTO_INCREMENT PRIMARY KEY, 
-    order_id INT NOT NULL,                     -- 外鍵，參照 orders 資料表
-    amount DECIMAL(10, 2) NOT NULL,            -- 付款金額
-    payment_method VARCHAR(50) NOT NULL,       -- 付款方式 (例如：信用卡、現金)
-    payment_status VARCHAR(50) NOT NULL,       -- 付款狀態 (例如：success、failed、pending)
-    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 付款時間
-    
+-- 瑜伽輔具類別
+('P031', '瑜伽墊', '高防滑性瑜伽墊，適合多種練習。', '瑜伽輔具', NULL, 20.00, 'images/yoga_mat.jpg'),
+('P032', '瑜伽磚', '提供穩定支撐的高密度瑜伽磚。', '瑜伽輔具', NULL, 10.00, 'images/yoga_block.jpg'),
+('P033', '瑜伽輪', '輔助拉伸和後彎訓練的瑜伽輪。', '瑜伽輔具', NULL, 30.00, 'images/yoga_wheel.jpg'),
+('P034', '瑜伽包', '耐用且多功能的瑜伽裝備包。', '瑜伽輔具', NULL, 18.00, 'images/yoga_bag.jpg'),
+('P035', '瑜伽冷感毛巾', '適合流汗練習的冷感毛巾。', '瑜伽輔具', NULL, 12.00, 'images/yoga_cooling_towel.jpg'),
+('P036', '瑜伽帶', '輔助進階動作的多功能瑜伽帶。', '瑜伽輔具', NULL, 10.00, 'images/yoga_strap.jpg'),
+('P037', '瑜伽墊背包', '可輕鬆攜帶瑜伽墊的背包。', '瑜伽輔具', NULL, 25.00, 'images/yoga_mat_bag.jpg'),
+('P038', '瑜伽椅', '幫助完成倒立等高難度動作的專用椅子。', '瑜伽輔具', NULL, 50.00, 'images/yoga_chair.jpg'),
+('P039', '瑜伽輪加強版', '適合進階練習的瑜伽輪。', '瑜伽輔具', NULL, 40.00, 'images/advanced_yoga_wheel.jpg'),
+('P040', '冥想抱枕', '提供額外支撐的舒適抱枕。', '瑜伽輔具', NULL, 30.00, 'images/meditation_pillow.jpg'),
+('P041', '瑜伽繩', '幫助拉伸和瑜伽動作的專業瑜伽繩。', '瑜伽輔具', NULL, 8.00, 'images/yoga_strap.jpg'),
+('P042', '瑜伽毛巾', '吸汗快乾的瑜伽毛巾，適合多種場合。', '瑜伽輔具', NULL, 10.00, 'images/yoga_towel.jpg'),
+('P043', '瑜伽球', '適合平衡訓練的大尺寸瑜伽球。', '瑜伽輔具', 1.50, 20.00, 'images/yoga_ball.jpg'),
+('P044', '瑜伽椅', '提供穩定支撐的專業瑜伽椅。', '瑜伽輔具', NULL, 40.00, 'images/yoga_chair.jpg'),
+('P045', '瑜伽頭枕', '舒適支撐的瑜伽專用頭枕。', '瑜伽輔具', NULL, 15.00, 'images/yoga_pillow.jpg'),
+
+
+-- 其他商品
+('P046', '按摩滾筒', '針對深層肌肉放鬆的按摩滾筒。', '其他', NULL, 25.00, 'images/foam_roller.jpg'),
+('P047', '冷敷袋', '多用途冷敷袋，緩解運動後不適。', '其他', NULL, 8.00, 'images/ice_pack.jpg'),
+('P048', '熱敷墊', '電子加熱的熱敷墊，促進血液循環。', '其他', 0.50, 35.00, 'images/heating_pad.jpg'),
+('P049', '運動筆記本', '記錄運動計劃和目標的專業筆記本。', '其他', NULL, 10.00, 'images/sports_notebook.jpg'),
+('P050', '運動毛巾', '大尺寸吸水運動毛巾，適合訓練後使用。', '其他', NULL, 12.00, 'images/sports_towel.jpg'),
+('P051', '護膝', '專業運動護膝，保護膝蓋關節。', '運動護具', NULL, 20.00, 'images/knee_pad.jpg'),
+('P052', '護腕', '加強支撐的運動護腕，減少受傷風險。', '運動護具', NULL, 12.00, 'images/wrist_support.jpg'),
+('P053', '護肘', '輕量透氣的運動護肘。', '運動護具', NULL, 15.00, 'images/elbow_pad.jpg'),
+('P054', '護踝', '高彈性運動護踝，適合多種運動。', '運動護具', NULL, 10.00, 'images/ankle_support.jpg'),
+('P055', '護肩', '加厚型運動護肩，支撐肩部運動。', '運動護具', NULL, 25.00, 'images/shoulder_support.jpg');
+
+drop table Vedios;
+CREATE TABLE Videos (
+    id INT AUTO_INCREMENT PRIMARY KEY,   -- 影片 ID (主鍵、自增)
+    title VARCHAR(255) NOT NULL,         -- 影片標題
+    description TEXT,                    -- 影片描述
+    video_url VARCHAR(255) NOT NULL,     -- 影片 URL
+    category VARCHAR(50) NOT NULL,       -- 影片類型 (例如: 居家徒手健身、居家器械運動、居家有氧)
+    status INT NOT NULL           -- 影片狀態 (0: 停用, 1: 啟用)
 );
--- FOREIGN KEY (order_id) REFERENCES orders(order_id) -- 設定外鍵，關聯到 orders 表
 
-INSERT INTO payments (order_id, amount, payment_method, payment_status, payment_date) 
-VALUES
-(1, 150.00, '信用卡', 'success', '2025-01-10 14:20:00'),
-(2, 250.50, '現金', 'success', '2025-01-10 15:30:00'),
-(3, 99.99, '信用卡', 'failed', '2025-01-11 10:00:00'),
-(4, 300.00, '現金', 'success', '2025-01-11 11:45:00'),
-(5, 450.75, '信用卡', 'success', '2025-01-12 09:20:00'),
-(6, 120.00, '現金', 'pending', '2025-01-12 10:50:00'),
-(7, 200.50, '信用卡', 'failed', '2025-01-13 13:30:00'),
-(8, 330.00, '現金', 'success', '2025-01-13 14:10:00'),
-(9, 175.25, '信用卡', 'pending', '2025-01-14 08:50:00'),
-(10, 550.00, '現金', 'success', '2025-01-14 16:20:00'),
-(11, 120.75, '信用卡', 'success', '2025-01-15 11:00:00'),
-(12, 300.50, '現金', 'failed', '2025-01-15 12:30:00'),
-(13, 410.00, '信用卡', 'success', '2025-01-16 14:50:00'),
-(14, 95.99, '現金', 'pending', '2025-01-16 15:40:00'),
-(15, 210.00, '信用卡', 'success', '2025-01-17 09:10:00'),
-(16, 305.75, '現金', 'success', '2025-01-17 10:20:00'),
-(17, 480.00, '信用卡', 'success', '2025-01-18 13:50:00'),
-(18, 150.00, '現金', 'failed', '2025-01-18 14:30:00'),
-(19, 225.50, '信用卡', 'pending', '2025-01-19 11:20:00'),
-(20, 310.00, '現金', 'success', '2025-01-19 15:00:00');
+INSERT INTO Videos (title, description, video_url, category, status)
+VALUES 
+    -- 居家徒手健身 (20 部影片)
+    ('伏地挺身挑戰', '訓練胸部與三頭肌的經典動作', 'https://example.com/video1', '居家徒手健身', 1),
+    ('深蹲訓練', '提升腿部力量與核心穩定', 'https://example.com/video2', '居家徒手健身', 1),
+    ('仰臥起坐強化版', '針對腹部核心的強化訓練', 'https://example.com/video3', '居家徒手健身', 1),
+    ('登山者動作', '高效燃脂的徒手運動', 'https://example.com/video4', '居家徒手健身', 0),
+    ('側平板支撐挑戰', '訓練側腰與核心穩定性', 'https://example.com/video5', '居家徒手健身', 1),
+    ('仰臥橋式進階版', '增強臀部與核心力量', 'https://example.com/video6', '居家徒手健身', 0),
+    ('超人式核心訓練', '專注背部與核心肌群', 'https://example.com/video7', '居家徒手健身', 1),
+    ('單腳深蹲挑戰', '提升平衡與腿部肌耐力', 'https://example.com/video8', '居家徒手健身', 1),
+    ('波比跳燃脂版', '全身高強度間歇運動', 'https://example.com/video9', '居家徒手健身', 1),
+    ('動態平板支撐', '增強全身穩定性的運動', 'https://example.com/video10', '居家徒手健身', 0),
+    ('跳躍深蹲', '強化腿部爆發力的動作', 'https://example.com/video11', '居家徒手健身', 1),
+    ('側向弓箭步', '針對大腿內外側肌群的訓練', 'https://example.com/video12', '居家徒手健身', 0),
+    ('四足跪姿伸展', '訓練全身協調性的徒手動作', 'https://example.com/video13', '居家徒手健身', 1),
+    ('原地跑步', '提升心肺功能的居家徒手運動', 'https://example.com/video14', '居家徒手健身', 1),
+    ('單腿臀橋', '強化臀部與核心的進階訓練', 'https://example.com/video15', '居家徒手健身', 0),
+    ('伏地挺身變式', '挑戰不同肌群的徒手訓練', 'https://example.com/video16', '居家徒手健身', 1),
+    ('登山者動作進階版', '增加腹部核心與腿部耐力', 'https://example.com/video17', '居家徒手健身', 1),
+    ('高抬腿', '提升心跳速率的簡單有氧運動', 'https://example.com/video18', '居家徒手健身', 1),
+    ('跳箱訓練', '提升爆發力與耐力', 'https://example.com/video19', '居家徒手健身', 0),
+    ('波比跳標準版', '居家全身強化運動', 'https://example.com/video20', '居家徒手健身', 1),
 
-select * from payments;
+    -- 居家器械運動 (20 部影片)
+    ('啞鈴肩推', '增加肩部力量的居家運動', 'https://example.com/video21', '居家器械運動', 1),
+    ('壺鈴深蹲推舉', '結合腿部與上肢力量的器械訓練', 'https://example.com/video22', '居家器械運動', 1),
+    ('彈力帶深蹲', '提升臀部與腿部穩定性的訓練', 'https://example.com/video23', '居家器械運動', 0),
+    ('啞鈴划船', '專注於背部肌群的器械運動', 'https://example.com/video24', '居家器械運動', 1),
+    ('彈力帶側步', '激活腿部與臀部肌群', 'https://example.com/video25', '居家器械運動', 1),
+    ('壺鈴硬舉', '提升背部與下肢的協調性', 'https://example.com/video26', '居家器械運動', 0),
+    ('啞鈴臂屈伸', '加強上肢肌群的訓練', 'https://example.com/video27', '居家器械運動', 1),
+    ('壺鈴行走推舉', '結合核心穩定與肩部訓練', 'https://example.com/video28', '居家器械運動', 1),
+    ('彈力帶雙臂推拉', '提升背部與胸部力量的動作', 'https://example.com/video29', '居家器械運動', 1),
+    ('啞鈴深蹲', '提升腿部與臀部肌肉力量', 'https://example.com/video30', '居家器械運動', 0),
+
+    -- 居家有氧 (15 部影片)
+    ('高抬腿原地跑', '居家有氧的基礎動作', 'https://example.com/video31', '居家有氧', 1),
+    ('開合跳', '提升心肺功能的經典運動', 'https://example.com/video32', '居家有氧', 1),
+    ('波比跳燃脂挑戰', '高效燃燒卡路里的有氧訓練', 'https://example.com/video33', '居家有氧', 0),
+    ('動態平板支撐', '結合力量與耐力的居家運動', 'https://example.com/video34', '居家有氧', 1),
+    ('高強度跳躍', '訓練全身耐力與爆發力的動作', 'https://example.com/video35', '居家有氧', 0),
+    ('跳繩燃脂訓練', '適合快速燃燒卡路里的運動', 'https://example.com/video36', '居家有氧', 1),
+    ('階梯爬行模擬', '提升腿部與心肺功能的運動', 'https://example.com/video37', '居家有氧', 1),
+    ('快速步伐訓練', '加強靈敏度與心肺耐力的動作', 'https://example.com/video38', '居家有氧', 1),
+    ('大幅度開合跳', '居家有氧的進階挑戰', 'https://example.com/video39', '居家有氧', 0),
+    ('高抬腿波比跳', '結合有氧與核心的全身運動', 'https://example.com/video40', '居家有氧', 1),
+    ('原地快跑', '適合初學者的有氧運動', 'https://example.com/video41', '居家有氧', 1),
+    ('跳台階訓練', '模擬戶外的居家有氧運動', 'https://example.com/video42', '居家有氧', 0),
+    ('交替登高模擬', '簡單卻高效的心肺運動', 'https://example.com/video43', '居家有氧', 1),
+    ('交叉腿開合跳', '增加靈活性與心肺耐力', 'https://example.com/video44', '居家有氧', 1),
+    ('有氧快走模擬', '低衝擊的心肺功能訓練', 'https://example.com/video45', '居家有氧', 1);
+select * from Videos;

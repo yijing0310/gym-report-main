@@ -4,17 +4,11 @@ $title ="文章管理";
 $pageName="article";
 
 $article_id = empty($_GET['article_id'])? 0 : intval($_GET['article_id']);
-// if(empty($article_id)){
-//   header('Location: article.php');
-//   exit;
-// }
+
 
 $allsql="SELECT * FROM articles WHERE article_id = $article_id";
 $r = $pdo->query($allsql)->fetch();
-// if(empty($r)){
-//   header('Location: article.php');
-//   exit;
-// }
+
 
 
 
@@ -38,11 +32,7 @@ $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
 
 if($totalRows>0){
-  // if($page > $totalPages){
-  //     header('Location:?page='.$totalPages);
-  //     exit;
-  // }
-  $sql = sprintf("SELECT * FROM `articles` %s
+ = sprintf("SELECT * FROM `articles` %s
   LIMIT %s, %s", $where,
   ($page -1) * $perPage,
   $perPage);
@@ -53,10 +43,6 @@ $totalPages = ceil($totalRows/$perPage);
 
 $all_sql="SELECT * FROM articles WHERE article_id = $article_id";
 $r = $pdo->query($all_sql)->fetch();
-// if(empty($r)){
-//     header('Location: article.php');
-//     exit;
-// }
 ?>
 <?php include __DIR__ . '/includes/html-header.php'; ?>
 <style>
