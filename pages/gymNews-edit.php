@@ -41,23 +41,24 @@ if(empty($r)){
           <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-title">標題</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="basic-default-title" placeholder="title" name="title" value="<?=$r['title']?>">
-              <div id="titleError" class="color-danger my-2"></div>
+              <input type="text" class="form-control" id="basic-default-title" placeholder="請輸入標題" name="title" value="<?=$r['title']?>">
+              <div id="titleError" class="mt-3" style="color: red;"></div>
             </div>
             
           </div>
           <div class="row mb-6">
-            <label class="col-sm-2 col-form-label" for="basic-default-author">作者ID</label>
+            <label class="col-sm-2 col-form-label" for="basic-default-author">發布者</label>
             <div class="col-sm-10">
-              <input type="number" class="form-control " id="basic-default-author" name="author_id" placeholder="ID" min=1  value="<?=$r['author_id']?>" require>
+              <input type="text" class="form-control " id="basic-default-author" name="author_id" placeholder="請輸入發布者工號" min=1  value="<?=$r['author_id']?>" require>
+              <div id="authorError" class="mt-3" style="color: red;"></div>
             </div>
             
           </div>
           <div class="row mb-2">
             <label class="col-sm-2 col-form-label" for="basic-default-content">文章內容</label>
             <div class="col-sm-10">
-              <textarea id="basic-default-content" class="form-control" placeholder="Hi, Do you have a moment to talk Joe?" aria-label="Hi, Do you have a moment to talk Joe?" aria-describedby="basic-icon-default-message2" rows="3" name="content" ><?=$r['content']?></textarea>
-              <div id="contentError"></div>
+              <textarea id="basic-default-content" class="form-control" placeholder="請輸入最新消息內容" aria-describedby="basic-icon-default-message2" rows="3" name="content" ><?=$r['content']?></textarea>
+              <div id="contentError" class="mt-3" style="color: red;"></div>
             </div>
           </div>
           <div class="row" >
@@ -79,9 +80,8 @@ if(empty($r)){
                 
             </div>
           </div>
-          <div class="mt-6">
+          <div class="mt-6 text-end">
             <button type="submit" class="btn btn-primary me-3">確定</button>
-            <button type="reset" class="btn btn-outline-secondary">重設</button>
           </div>
         </form>
       </div>
@@ -142,6 +142,7 @@ if(empty($r)){
     const title = document.querySelector('#basic-default-title')
     const content = document.querySelector('#basic-default-content')
     const textCount = document.querySelector('#textCount')
+    const author = document.querySelector('#basic-default-author')
 
     textCount.innerHTML = `${content.value.length} 個字`;
     content.addEventListener('input', () => {
@@ -151,20 +152,31 @@ if(empty($r)){
     const sendData = e=>{
         e.preventDefault();
         content.classList.remove('btn-outline-danger')
-        textCount.classList.remove('btn-outline-danger')
+        document.querySelector('#contentError').innerHTML =''
+        title.classList.remove('btn-outline-danger')
+        document.querySelector('#titleError').innerHTML =''
+        author.classList.remove('btn-outline-danger')
+        document.querySelector('#authorError').innerHTML=''
+        
         
         let isPass = true 
 
-        if(title.value.length <= 3){
+        if(title.value.length < 3){
             isPass=false;
             document.querySelector('#titleError').innerHTML ='標題不能小於3個字'
             title.classList.add('btn-outline-danger')
         }
-        if(content.value.length <= 10){
+        if(content.value.length < 10){
             isPass=false;
             document.querySelector('#contentError').innerHTML ='內文不能小於10個字'
             content.classList.add('btn-outline-danger')
         }
+        if(author.value.length !== 8){
+            isPass=false;
+            document.querySelector('#authorError').innerHTML ='工號錯誤 ( 提示：8碼 )'
+            author.classList.add('btn-outline-danger')
+        }
+
 
         
         if (isPass) {

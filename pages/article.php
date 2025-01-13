@@ -187,20 +187,18 @@ $r = $pdo->query($all_sql)->fetch();
                   <label class="col-sm-2 col-form-label" for="basic-default-title">標題</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="basic-default-title" placeholder="title" name="title" value="" disabled>
-                    <div id="titleError" class="color-danger my-2"></div>
                   </div>
                 </div>
                 <div class="row mb-6">
                   <label class="col-sm-2 col-form-label" for="basic-default-author">作者工號</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control " id="basic-default-author" name="author_id" placeholder="ID" min=1  value="" disabled>
+                    <input type="number" class="form-control " id="basic-default-author" name="author_id"  value="" disabled>
                   </div>
                 </div>
                 <div class="row mb-6">
                   <label class="col-sm-2 col-form-label" for="basic-default-content">文章內容</label>
                   <div class="col-sm-10">
                     <textarea id="basic-default-content" class="form-control" rows="5" name="content" disabled></textarea>
-                    <div id="contentError"></div>
                   </div>
                 </div>
                 <div class="row mb-6">
