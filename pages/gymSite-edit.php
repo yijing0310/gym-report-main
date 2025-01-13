@@ -1,7 +1,7 @@
 <?php require __DIR__ . '/includes/init.php';?>
 <?php
 $title = "編輯GYM點";
-$pageName = "gym-edit"; 
+$pageName = "gymSite-edit"; 
 $gym_id = empty($_GET['gym_id'])? 0 : intval($_GET['gym_id']);
 if(empty($gym_id)){
     header('Location: gymSite.php');

@@ -1,7 +1,7 @@
 <?php require __DIR__ . '/includes/init.php';?>
 <?php
 $title = "新增GYM點";
-$pageName = "article-add"; 
+$pageName = "gymSite-add"; 
 ?>
 <?php include __DIR__ . '/includes/html-header.php'; ?>
 <?php include __DIR__ . '/includes/html-sidebar.php'; ?>
