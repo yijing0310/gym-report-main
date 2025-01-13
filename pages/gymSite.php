@@ -14,11 +14,7 @@ $t_sql = "SELECT count(*) FROM gyms";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; 
 
 if($totalRows>0){
-  // if($page > $totalPages){
-  //     header('Location:?page='.$totalPages);
-  //     exit;
-  // }
-  $sql = sprintf("SELECT * FROM gyms
+   $sql = sprintf("SELECT * FROM gyms
   LIMIT %s, %s",
   ($page -1) * $perPage,
   $perPage);
