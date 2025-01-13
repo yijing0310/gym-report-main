@@ -87,17 +87,17 @@ if (! isset($pageName)) {
     <li class="menu-item <?= in_array($pageName, ['gymAdmin', 'gymAdmin-add', 'gymAdmin-edit']) ? 'active' : '' ?>">
       <a href="gymAdmin.php" target="_blank" class="menu-link  menu-toggle">
         <i class="menu-icon fa-regular fa-user fa-2xs"></i>
-        <div class="text-truncate" data-i18n="Support">管理員列表</div>
+        <div class="text-truncate" data-i18n="Support">管理員</div>
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="gymAdmin-add.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">新增管理員</div>
+          <a href="gymAdmin.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">管理員列表</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="gymAdmin-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯管理員</div>
+          <a href="gymAdmin-add.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">新增管理員</div>
           </a>
         </li>
       </ul>
@@ -105,17 +105,17 @@ if (! isset($pageName)) {
     <li class="menu-item <?= in_array($pageName, ['coach', 'coach-add', 'coach-edit']) ? 'active' : '' ?>">
       <a href="coach.php" target="_blank" class="menu-link  menu-toggle">
         <i class="menu-icon fa-solid fa-dumbbell fa-2xs"></i>
-        <div class="text-truncate" data-i18n="Support">教練列表</div>
+        <div class="text-truncate" data-i18n="Support">教練管理</div>
       </a>
       <ul class="menu-sub">
-        <li class="menu-item">
-          <a href="coach-add.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">新增教練</div>
+      <li class="menu-item">
+          <a href="coach.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">教練列表</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="coach-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯教練</div>
+          <a href="coach-add.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">新增教練</div>
           </a>
         </li>
       </ul>
@@ -123,19 +123,20 @@ if (! isset($pageName)) {
     <li class="menu-item <?= in_array($pageName, ['gymMember', 'gymMember-add', 'gymMember-edit']) ? 'active' : '' ?>">
       <a href="gymMember.php" target="_blank" class="menu-link  menu-toggle">
         <i class="menu-icon fa-solid fa-users fa-2xs"></i>
-        <div class="text-truncate" data-i18n="Support">會員列表</div>
+        <div class="text-truncate" data-i18n="Support">會員管理</div>
       </a>
       <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="gymMembe.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">會員列表</div>
+          </a>
+        </li>
         <li class="menu-item">
           <a href="gymMember-add.php" class="menu-link">
             <div class="text-truncate" data-i18n="Analytics">新增會員</div>
           </a>
         </li>
-        <li class="menu-item">
-          <a href="gymMember-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯會員</div>
-          </a>
-        </li>
+
       </ul>
     </li>
     <li class="menu-item <?= in_array($pageName, ['gymSite', 'gymSite-add', 'gymSite-edit']) ? 'active' : '' ?>">
@@ -163,17 +164,17 @@ if (! isset($pageName)) {
     <li class="menu-item <?= in_array($pageName, ['order', 'order-add', 'order-edit']) ? 'active' : '' ?>">
       <a href="order.php" target="_blank" class="menu-link  menu-toggle">
         <i class="menu-icon fa-solid fa-desktop fa-2xs"></i>
-        <div class="text-truncate" data-i18n="Support">訂單列表</div>
+        <div class="text-truncate" data-i18n="Support">訂單管理</div>
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="order-add.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">新增訂單</div>
+          <a href="order.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">訂單列表</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="order-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯訂單</div>
+          <a href="order-add.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">新增訂單</div>
           </a>
         </li>
       </ul>
@@ -184,17 +185,17 @@ if (! isset($pageName)) {
     <li class="menu-item  <?= in_array($pageName, ['gymNews', 'gymNews-add', 'gymNews-edit']) ? 'active' : '' ?>">
       <a href="gymNews.php" class="menu-link  menu-toggle">
         <i class="menu-icon fa-regular fa-newspaper fa-2xs"></i>
-        <div class="text-truncate" data-i18n="Support">最新消息</div>
+        <div class="text-truncate" data-i18n="Support">最新消息管理</div>
       </a>
       <ul class="menu-sub">
-        <li class="menu-item <?=$pageName=='gymNews-add'?'active':'' ?>">
-          <a href="gymNews-add.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">新增最新消息</div>
+        <li class="menu-item ">
+          <a href="gymNews.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">最新消息列表</div>
           </a>
         </li>
-        <li class="menu-item <?=$pageName=='gymNews-edit'?'active':'' ?>">
-          <a href="gymNews-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯最新消息</div>
+        <li class="menu-item">
+          <a href="gymNews-add.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">新增最新消息</div>
           </a>
         </li>
       </ul>
@@ -206,13 +207,13 @@ if (! isset($pageName)) {
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="article-add.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">新增文章</div>
+          <a href="article.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">文章列表</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="article-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯文章</div>
+          <a href="article-add.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">新增文章</div>
           </a>
         </li>
       </ul>
@@ -221,37 +222,39 @@ if (! isset($pageName)) {
     <li class="menu-item <?= in_array($pageName, ['videos', 'videos-add', 'videos-edit']) ? 'active' : '' ?>">
       <a href="videos.php" target="_blank" class="menu-link  menu-toggle">
         <i class="menu-icon fa-solid fa-play fa-xs"></i>
-        <div class="text-truncate" data-i18n="Support">影片列表</div>
+        <div class="text-truncate" data-i18n="Support">影片管理</div>
       </a>
       <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="videos.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">影片列表</div>
+          </a>
+        </li>
         <li class="menu-item">
           <a href="videos-add.php" class="menu-link">
             <div class="text-truncate" data-i18n="Analytics">新增影片</div>
           </a>
         </li>
-        <li class="menu-item">
-          <a href="videos.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯影片</div>
-          </a>
-        </li>
+
       </ul>
     </li>
     <li class="menu-item <?= in_array($pageName, ['class', 'class-add', 'class-edit']) ? 'active' : '' ?>">
       <a href="class.php" target="_blank" class="menu-link  menu-toggle">
         <i class="menu-icon fa-solid fa-book fa-2xs"></i>
-        <div class="text-truncate" data-i18n="Support">課程列表</div>
+        <div class="text-truncate" data-i18n="Support">課程管理</div>
       </a>
       <ul class="menu-sub">
+      <li class="menu-item">
+          <a href="class.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">課程列表</div>
+          </a>
+        </li>
         <li class="menu-item">
           <a href="class-add.php" class="menu-link">
             <div class="text-truncate" data-i18n="Analytics">新增課程</div>
           </a>
         </li>
-        <li class="menu-item">
-          <a href="class-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯課程</div>
-          </a>
-        </li>
+
       </ul>
     </li>
     <li class="menu-header small text-uppercase">
@@ -260,35 +263,35 @@ if (! isset($pageName)) {
     <li class="menu-item <?= in_array($pageName, ['reserveCoach', 'reserveCoach-add', 'reserveCoach-edit']) ? 'active' : '' ?>">
       <a href="reserveCoach.php" target="_blank" class="menu-link  menu-toggle">
         <i class="menu-icon fa-solid fa-envelope fa-2xs"></i>
-        <div class="text-truncate" data-i18n="Support">教練預約列表</div>
+        <div class="text-truncate" data-i18n="Support">教練預約管理</div>
       </a>
       <ul class="menu-sub">
+      <li class="menu-item">
+              <a href="reserveCoach.php" class="menu-link">
+                <div class="text-truncate" data-i18n="Analytics">教練預約列表</div>
+              </a>
+          </li> 
         <li class="menu-item">
               <a href="reserveCoach-add.php" class="menu-link ">
                 <div class="text-truncate" data-i18n="Analytics">新增教練預約</div>
               </a>
           </li>
-          <li class="menu-item">
-              <a href="reserveCoach-edit.php" class="menu-link">
-                <div class="text-truncate" data-i18n="Analytics">編輯教練預約</div>
-              </a>
-          </li> 
       </ul>
       </li>
     <li class="menu-item  <?= in_array($pageName, ['reserveClass', 'reserveClass-add', 'reserveClass-edit']) ? 'active' : '' ?>">
         <a href="reserveClass.php" target="_blank" class="menu-link  menu-toggle">
           <i class="menu-icon fa-regular fa-envelope"></i>
-          <div class="text-truncate" data-i18n="Support">課程預約列表</div>
+          <div class="text-truncate" data-i18n="Support">課程預約管理</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-          <a href="reserveClass-add.php" class="menu-link ">
-            <div class="text-truncate" data-i18n="Analytics">新增課程預約</div>
+          <a href="reserveClass.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">課程預約列表</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="reserveClass-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯課程預約</div>
+          <a href="reserveClass-add.php" class="menu-link ">
+            <div class="text-truncate" data-i18n="Analytics">新增課程預約</div>
           </a>
         </li>
         </ul>
@@ -297,19 +300,20 @@ if (! isset($pageName)) {
     <li class="menu-item  <?= in_array($pageName, ['products', 'products-add', 'products-edit']) ? 'active' : '' ?>">
       <a href="products.php" target="_blank" class="menu-link  menu-toggle">
         <i class="menu-icon fa-solid fa-right-left fa-2xs"></i>
-        <div class="text-truncate" data-i18n="Support">租借產品列表</div>
+        <div class="text-truncate" data-i18n="Support">租借產品管理</div>
       </a>
       <ul class="menu-sub">
+      <li class="menu-item">
+          <a href="products.php" class="menu-link">
+            <div class="text-truncate" data-i18n="Analytics">產品列表</div>
+          </a>
+        </li>
         <li class="menu-item">
           <a href="products-add.php" class="menu-link">
             <div class="text-truncate" data-i18n="Analytics">新增產品列表</div>
           </a>
         </li>
-        <li class="menu-item">
-          <a href="products-edit.php" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">編輯產品列表</div>
-          </a>
-        </li>
+
       </ul>
     </li>
     
@@ -318,5 +322,3 @@ if (! isset($pageName)) {
 
 </aside>
 <!-- / Menu -->
- <!-- Layout container -->
- <!-- <div class="layout-page"> -->
