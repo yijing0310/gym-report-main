@@ -8,9 +8,9 @@ $pageName="home";
 <?php include __DIR__ . '/includes/html-layout-navbar.php'; ?>
 <?php include __DIR__ . '/includes/html-content wrapper-start.php'; ?>
 
-<div class="row">
-    <div class="col-xxl card p-5 h-100">
-    <h2>歡迎來到GYM管系統</h2>
+<div class="card d-flex justify-content-center" style="height: 700px;">
+    <div class="row">
+        <h2 class="text-center"> \\ &nbsp;&nbsp;歡迎來到GYM管系統 &nbsp;&nbsp;//</h2>
     </div>
 </div>
 
