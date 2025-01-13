@@ -190,28 +190,24 @@ $r = $pdo->query($all_sql)->fetch();
                   <label class="col-sm-2 col-form-label" for="basic-default-title">標題</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="basic-default-title" placeholder="title" name="title" value="" disabled>
-                    <div id="titleError" class="color-danger my-2"></div>
                   </div>
                 </div>
                 <div class="row mb-6">
                   <label class="col-sm-2 col-form-label" for="basic-default-description">影片描述</label>
                   <div class="col-sm-10">
                     <textarea id="basic-default-description" class="form-control" rows="5" name="description" disabled></textarea>
-                    <div id="descriptionError"></div>
                   </div>
                 </div>
                 <div class="row mb-6">
                   <label class="col-sm-2 col-form-label" for="basic-default-video_url">影片網址</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="basic-default-video_url"  name="video_url" value="" disabled>
-                    <div id="video_urlError" class="color-danger my-2"></div>
                   </div>
                 </div>
                 <div class="row mb-6">
                   <label class="col-sm-2 col-form-label" for="basic-default-category">影片分類</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="basic-default-category"  name="category" value="" disabled>
-                    <div id="categoryError" class="color-danger my-2"></div>
                   </div>
                 </div>
                 <div class="row mb-6">

@@ -22,7 +22,8 @@ $stmt -> execute([
     $_POST['description'],
     $_POST['video_url'],
     $_POST['category'],
-    $_POST['status']
+    $_POST['status'],
+    $_POST['videos_id']
 ]);
 $output['success'] = !!$stmt->rowCount();
 $output['lastInsertId'] = $pdo->lastInsertId();

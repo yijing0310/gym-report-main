@@ -2,13 +2,13 @@
 <?php
 $title = "影片修改";
 $pageName = "videos-edit"; 
-$video_id = empty($_GET['video_id'])? 0 : intval($_GET['video_id']);
-if(empty($video_id)){
+$videos_id = empty($_GET['videos_id'])? 0 : intval($_GET['videos_id']);
+if(empty($videos_id)){
     header('Location: videos.php');
     exit;
 }
 
-$sql="SELECT * FROM Videos WHERE video_id = $video_id";
+$sql="SELECT * FROM Videos WHERE videos_id = $videos_id";
 $r = $pdo->query($sql)->fetch();
 if(empty($r)){
     header('Location: videos.php');
@@ -31,11 +31,11 @@ if(empty($r)){
       </div>
       <div class="card-body">
         <form onsubmit="sendData(event)">
-            <input type="hidden" class="form-control" name="video_id" value="<?=$r['video_id'] ?>" >    
+            <input type="hidden" class="form-control" name="videos_id" value="<?=$r['videos_id'] ?>" >    
             <div class="row mb-6">
-                <label class="col-sm-2 col-form-label" for="basic-default-video_id">影片ID</label>
+                <label class="col-sm-2 col-form-label" for="basic-default-videos_id">影片ID</label>
                 <div class="col-sm-10">
-                <input type="text" class="form-control" id="basic-default-video_id" name="video_id" value="<?=$r['video_id'] ?>" disabled >
+                <input type="text" class="form-control" id="basic-default-videos_id" name="videos_id" value="<?=$r['videos_id'] ?>" disabled >
                 </div>
             </div>
           <div class="row mb-6">
@@ -78,9 +78,9 @@ if(empty($r)){
             <div class="col-sm-10">
                 <div class="row">
                     <div class="col-sm-6">
-                        <select id="sendNotification" class="form-select" name="uploadStatus">
-                            <option value="1"  <?=($r['uploadStatus'] == 1) ? 'selected' : ''; ?>>發布</option>
-                            <option value="0" <?=($r['uploadStatus'] == 0) ? 'selected' : ''; ?>>未發布</option>
+                        <select id="sendNotification" class="form-select" name="status">
+                            <option value="1"  <?=($r['status'] == 1) ? 'selected' : ''; ?>>發布</option>
+                            <option value="0" <?=($r['status'] == 0) ? 'selected' : ''; ?>>未發布</option>
                         </select>
                     </div>
                 </div>
