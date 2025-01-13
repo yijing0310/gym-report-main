@@ -192,7 +192,7 @@ $r = $pdo->query($all_sql)->fetch();
                 <div class="row mb-6">
                   <label class="col-sm-2 col-form-label" for="basic-default-author">作者工號</label>
                   <div class="col-sm-10">
-                    <input type="number" class="form-control " id="basic-default-author" name="author_id"  value="" disabled>
+                    <input type="text" class="form-control " id="basic-default-author" name="author_id"  value="" disabled>
                   </div>
                 </div>
                 <div class="row mb-6">

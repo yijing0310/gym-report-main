@@ -89,6 +89,7 @@ $totalPages = ceil($totalRows/$perPage);
     <table class="table table-hover">
       <thead>
         <tr>
+          <th>#</th>
           <th>ID</th>
           <th>名稱</th>
           <th>地址</th>
@@ -100,7 +101,7 @@ $totalPages = ceil($totalRows/$perPage);
           <th>email</th>
           <th>經理</th>
           <th>圖片</th>
-          <th>位置</th>
+          <th>位置訊息</th>
           <th>創建時間</th>
           <th>編輯</th>
           <th>刪除</th>
@@ -109,6 +110,9 @@ $totalPages = ceil($totalRows/$perPage);
       <tbody class="table-border-bottom-0">
         <?php foreach($rows as $v):?>
         <tr>
+          <td><button type="button" class="btn rounded-pill btn-icon btn-outline-secondary" data-bs-toggle="modal"  data-bs-target="#exLargeModal" data-gym-id="<?=$v['gym_id']?>" id="viewBtn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button></td>
           <td><?=$v['gym_id']?></td>
           <td style="max-width: 120px" title="<?=$v['name']?>">
             <?=$v['name']?>
@@ -158,6 +162,87 @@ $totalPages = ceil($totalRows/$perPage);
     </table>
   </div>
 </div>
+<!-- modal -->
+<div class="modal fade" id="exLargeModal" tabindex="-1" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">健身房據點詳情</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-gym_id">ID</label>
+                  <div class="col-sm-10">
+                  <input type="text" class="form-control" id="basic-default-gym_id" name="gym_id" value="" disabled >
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-name">名稱</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="basic-default-name" name="name"  disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-address">地址</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-address" name="address" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-business_days">營業星期</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-business_days" name="business_days" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-opening_hours">開門時間</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-opening_hours" name="opening_hours" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-closing_hours">關門時間</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-closing_hours" name="closing_hours" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-description">描述</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-description" name="description" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-contact_info">聯絡電話</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-contact_info" name="contact_info" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-email"> email</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-email" name="email" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-image_url">圖片連結</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-image_url" name="image_url" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-google_map_link">位置訊息</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-google_map_link" name="google_map_link" disabled>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 <!-- modal delete -->
 <div class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true" id="delete-modal">
     <div class="modal-dialog modal-lg" role="document" >
@@ -182,6 +267,37 @@ $totalPages = ceil($totalRows/$perPage);
 <?php include __DIR__ . '/includes/html-content wrapper-end.php'; ?>
 <?php include __DIR__ . '/includes/html-script.php'; ?>
 <script>
+   const viewButtons = document.querySelectorAll('#viewBtn');
+  viewButtons.forEach(button => {
+    button.addEventListener('click', function() {
+          const gym_id = this.getAttribute('data-gym-id'); 
+          fetch(`gymSite-details-api.php?gym_id=${gym_id}`)
+              .then(r => r.json())
+              .then(data => {
+                  if (data.success) {
+                      document.getElementById('basic-default-gym_id').value = data.gyms.gym_id;
+                      document.getElementById('basic-default-name').value = data.gyms.name;
+                      document.getElementById('basic-default-address').value = data.gyms.address;
+                      document.getElementById('basic-default-business_days').value = data.gyms.business_days;
+                      document.getElementById('basic-default-opening_hours').value = data.gyms.opening_hours;
+                      document.getElementById('basic-default-closing_hours').value = data.gyms.closing_hours;
+                      document.getElementById('basic-default-description').value = data.gyms.description;
+                      document.getElementById('basic-default-contact_info').value = data.gyms.contact_info;
+                      document.getElementById('basic-default-email').value = data.gyms.email;
+                      document.getElementById('basic-default-manager').value = data.gyms.manager;
+                      document.getElementById('basic-default-image_url,').value = data.gyms.image_url;
+                      document.getElementById('basic-default-google_map_link').value = data.gyms.google_map_link;
+                  } else {
+                      alert(data.error || '無法加載文章');
+                  }
+              })
+              .catch(error => {
+                  console.warn;
+                  alert('發生錯誤，請稍後再試');
+              });
+      });
+  });
+
     const deleteOne = e=>{
         e.preventDefault();
         const tr = e.target.closest('tr')
@@ -191,7 +307,7 @@ $totalPages = ceil($totalRows/$perPage);
 
         const delModal = new bootstrap.Modal('#delete-modal')
         delModal.show()
-        document.querySelector('#exampleModalLabel2').innerHTML=`是否要刪除編號為${gym_id}，${name}的文章`
+        document.querySelector('#exampleModalLabel2').innerHTML=`是否要刪除編號為${gym_id}，${name}的據點`
         document.querySelector('#yesgo').addEventListener('click',function(){
           location.href=`gymSite-del-api.php?gym_id=${gym_id}`
         })
