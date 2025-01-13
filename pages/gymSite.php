@@ -226,6 +226,12 @@ $totalPages = ceil($totalRows/$perPage);
                   </div>
                 </div>
                 <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-manager">經理</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control " id="basic-default-manager" name="manager" disabled>
+                  </div>
+                </div>
+                <div class="row mb-6">
                   <label class="col-sm-2 col-form-label" for="basic-default-image_url">圖片連結</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control " id="basic-default-image_url" name="image_url" disabled>
