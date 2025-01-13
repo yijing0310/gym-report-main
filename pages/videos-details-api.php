@@ -12,7 +12,7 @@ $output = [
 ];
 
 if ($videos_id > 0) {
-    $sql = "SELECT * FROM Video WHERE videos_id = ?";
+    $sql = "SELECT * FROM Videos WHERE videos_id = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$videos_id]);
     $Video = $stmt->fetch();
@@ -21,10 +21,10 @@ if ($videos_id > 0) {
             $output['success'] = true;
             $output['Video'] = $Video;
     } else {
-        $output['error'] = '文章不存在';
+        $output['error'] = '影片不存在';
     }
 } else {
-    $output['error'] = '文章ID無效';
+    $output['error'] = '影片ID無效';
 }
 
 echo json_encode($output,JSON_UNESCAPED_UNICODE);

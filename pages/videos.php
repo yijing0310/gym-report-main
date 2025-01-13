@@ -137,7 +137,7 @@ $r = $pdo->query($all_sql)->fetch();
         <?php foreach($rows as $v):?>
         <tr>
           <td>
-            <button type="button" class="btn rounded-pill btn-icon btn-outline-secondary" data-bs-toggle="modal"  data-bs-target="#exLargeModal"  data-videos_id="<?=$v['videos_id']?>" id="viewBtn">
+            <button type="button" class="btn rounded-pill btn-icon btn-outline-secondary" data-bs-toggle="modal"  data-bs-target="#exLargeModal"  data-videos-id="<?=$v['videos_id']?>" id="viewBtn">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </td>
@@ -158,7 +158,7 @@ $r = $pdo->query($all_sql)->fetch();
               <span class="badge bg-label-danger me-1">狀態錯誤</span>
             <?php endif; ?>
           </td>
-          <td><a class="dropdown-item" href="videos-edit.php?video_id=<?=$v['videos_id']?>">
+          <td><a class="dropdown-item" href="videos-edit.php?videos_id=<?=$v['videos_id']?>">
             <i class="bx bx-edit-alt me-1"></i></a>
           </td>
           <td><a class="dropdown-item"  href="javascript:" onclick="deleteOne(event)">
@@ -181,9 +181,9 @@ $r = $pdo->query($all_sql)->fetch();
               </div>
               <div class="modal-body">
                 <div class="row mb-6">
-                  <label class="col-sm-2 col-form-label" for="basic-default-video_id">影片ID</label>
+                  <label class="col-sm-2 col-form-label" for="basic-default-videos_id">影片ID</label>
                   <div class="col-sm-10">
-                  <input type="text" class="form-control" id="basic-default-video_id_id" name="video_id_id" value="" disabled >
+                  <input type="text" class="form-control" id="basic-default-videos_id" name="videos_id" value="" disabled >
                   </div>
                 </div>
                 <div class="row mb-6">
@@ -194,10 +194,24 @@ $r = $pdo->query($all_sql)->fetch();
                   </div>
                 </div>
                 <div class="row mb-6">
-                  <label class="col-sm-2 col-form-label" for="basic-default-description">文章內容</label>
+                  <label class="col-sm-2 col-form-label" for="basic-default-description">影片描述</label>
                   <div class="col-sm-10">
                     <textarea id="basic-default-description" class="form-control" rows="5" name="description" disabled></textarea>
                     <div id="descriptionError"></div>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-video_url">影片網址</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="basic-default-video_url"  name="video_url" value="" disabled>
+                    <div id="video_urlError" class="color-danger my-2"></div>
+                  </div>
+                </div>
+                <div class="row mb-6">
+                  <label class="col-sm-2 col-form-label" for="basic-default-category">影片分類</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="basic-default-category"  name="category" value="" disabled>
+                    <div id="categoryError" class="color-danger my-2"></div>
                   </div>
                 </div>
                 <div class="row mb-6">
@@ -240,21 +254,20 @@ $r = $pdo->query($all_sql)->fetch();
     const viewButtons = document.querySelectorAll('#viewBtn');
   viewButtons.forEach(button => {
       button.addEventListener('click', function() {
-          const vedios_id = this.getAttribute('data-vedios-id'); 
-          fetch(`vedios-details-api.php?vedios_id=${vedios_id}`)
+          const videos_id = this.getAttribute('data-videos-id'); 
+          fetch(`videos-details-api.php?videos_id=${videos_id}`)
               .then(r => r.json())
               .then(data => {
                   if (data.success) {
-                      document.getElementById('basic-default-vedios_id').value = data.vedios.vedios_id;
-                      document.getElementById('basic-default-title').value = data.vedios.title;
-                      document.getElementById('basic-default-vedios').value = data.vedios.vedios_id;
-                      document.getElementById('basic-default-description').value = data.vedios.description;
-                      document.getElementById('basic-default-video_url').value = data.vedios.video_url;
-                      document.getElementById('basic-default-status').value = data.vedios.status;
+                      document.getElementById('basic-default-videos_id').value = data.Video.videos_id;
+                      document.getElementById('basic-default-title').value = data.Video.title;
+                      document.getElementById('basic-default-description').value = data.Video.description;
+                      document.getElementById('basic-default-video_url').value = data.Video.video_url;
+                      document.getElementById('basic-default-category').value = data.Video.category;
                       
-                      document.getElementById('basic-default-uploadStatus').value = (data.article.uploadStatus==1?'發布':'未發布');
+                      document.getElementById('basic-default-status').value = (data.Video.status==1?'發布':'未發布');
                   } else {
-                      alert(data.error || '無法加載文章');
+                      alert(data.error || '無法加載影片內容');
                   }
               })
               .catch(error => {
@@ -267,14 +280,14 @@ $r = $pdo->query($all_sql)->fetch();
     const deleteOne = e=>{
         e.preventDefault();
         const tr = e.target.closest('tr')
-        const [,td_vedio_id,td_title,] = tr.querySelectorAll('td');
-        const vedioid = td_vedio_id.innerHTML
+        const [,td_videos_id,td_title,] = tr.querySelectorAll('td');
+        const videoid = td_videos_id.innerHTML
         const title = td_title.innerHTML
         const delModal = new bootstrap.Modal('#delete-modal')
         delModal.show()
-        document.querySelector('#exampleModalLabel2').innerHTML=`是否要刪除編號為${vedioid}，標題為${title}的文章`
+        document.querySelector('#exampleModalLabel2').innerHTML=`是否要刪除編號為${videoid}，標題為${title}的文章`
         document.querySelector('#yesgo').addEventListener('click',function(){
-          location.href=`vedios-del-api.php?vedio_id=${vedioid}`
+          location.href=`videos-del-api.php?videos_id=${videoid}`
         })
     }
     

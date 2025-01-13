@@ -91,7 +91,7 @@ $pageName = "videos-add";
             </div>
         </div>
         <div class="modal-footer">
-          <a href="./article.php" class="nav-link">
+          <a href="./videos.php" class="nav-link">
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"> 
             <i class="fa-solid fa-door-open me-4"></i>回到列表</a>
             </button>
