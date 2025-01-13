@@ -1,3 +1,4 @@
+-- DROP DATABASE gym_database;
 CREATE DATABASE gym_database;
 USE gym_database;
 
@@ -133,7 +134,7 @@ CREATE TABLE gym_news (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
-INSERT INTO gym_news (title, content, author_id, uploadStatus, created_at, updated_at) VALUES
+INSERT INTO gym_news (title, content, author_id, uploadStatus) VALUES
 ('健身房最新開設瑜伽課程', '我們的健身房將於下個月開始提供瑜伽課程，歡迎大家報名參加！', 'a2025001', 1),
 ('夏季優惠活動開始了', '我們的夏季優惠活動開始了，現在報名即可享受9折優惠！', 'a2025001', 1),
 ('新的健身器材上架', '我們的健身房已經更新了全新的健身器材，快來體驗吧！', 'a2025001', 1),
@@ -159,6 +160,29 @@ CREATE TABLE member_basic (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE member_profile (
+    profile_id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT,
+    height DECIMAL(5, 2),
+    weight DECIMAL(5, 2),
+    fitness_goals TEXT NOT NULL, 
+    bio TEXT,
+    profile_image VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (member_id) REFERENCES member_basic(member_id)
+);
+
+CREATE TABLE member_auth (
+    auth_id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT,
+    email VARCHAR(255),
+    member_password VARCHAR(255),
+    last_login TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (member_id) REFERENCES member_basic(member_id)
+);
 
 
 INSERT INTO member_basic (member_name, birthday, gender, phone, address) 
@@ -196,6 +220,78 @@ VALUES
 ('楊紫婷', '1992-07-30', 'male', '0912345708', '高雄市左營區自由路789號'),
 ('王子豪', '1994-06-19', 'female', '0912345709', '台北市內湖區民權東路456號');
 
+
+INSERT INTO member_profile (member_id, height, weight, fitness_goals, bio, profile_image) VALUES
+(1, 170.50, 65.20, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '熱愛戶外活動，喜歡挑戰自我，擁有積極的健身習慣。', 'profile1.jpg'),
+(2, 160.80, 54.10, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '享受健身房的時光，經常參加團體運動課程。', 'profile2.jpg'),
+(3, 175.00, 70.50, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '我喜歡跑步和游泳，平時也會參加競技活動。', 'profile3.jpg'),
+(4, 168.20, 58.40, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '健身是一種減壓方式，也希望結識更多志同道合的朋友。', 'profile4.jpg'),
+(5, 165.70, 60.80, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '喜歡在健身中尋找自己的節奏，專注於長期的運動訓練。', 'profile5.jpg'),
+(6, 172.30, 68.10, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '專注於康復訓練，希望提升身體機能和健康水平。', 'profile6.jpg'),
+(7, 160.00, 50.50, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '跑步是我最大的興趣，健身讓我保持能量滿滿。', 'profile7.jpg'),
+(8, 178.00, 75.00, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '對力量訓練充滿熱情，正在準備參加舉重比賽。', 'profile8.jpg'),
+(9, 165.50, 55.00, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '健身幫助我釋放壓力，也讓我逐步實現身體目標。', 'profile9.jpg'),
+(10, 170.10, 60.30, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '熱愛健康生活方式，擁有規律的運動習慣。', 'profile10.jpg'),
+(11, 162.40, 52.20, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '我喜歡跳舞和有氧運動，這是我保持身心健康的方法。', 'profile11.jpg'),
+(12, 180.00, 80.00, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '希望提升我的力量與速度，參與更多運動賽事。', 'profile12.jpg'),
+(13, 168.80, 65.50, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '喜歡健走和騎車，享受戶外運動的樂趣。', 'profile13.jpg'),
+(14, 172.60, 69.30, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '專注於長期的身體素質提升，健身讓我心情更好。', 'profile14.jpg'),
+(15, 167.90, 57.10, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '我喜歡瑜伽和普拉提，這幫助我平衡身心。', 'profile15.jpg'),
+(16, 176.40, 72.20, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '我的目標是參加馬拉松，並達到個人最佳狀態。', 'profile16.jpg'),
+(17, 162.10, 51.40, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '跑步和冥想是我的日常，享受健康的生活方式。', 'profile17.jpg'),
+(18, 169.50, 64.20, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '熱衷於力量訓練，希望挑戰更高的極限。', 'profile18.jpg'),
+(19, 175.20, 71.80, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '喜歡團體運動和戶外活動，希望擴展交友圈。', 'profile19.jpg'),
+(20, 170.80, 63.40, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '健身讓我保持專注和健康，希望完成長跑挑戰。', 'profile20.jpg'),
+(21, 161.50, 53.00, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '我喜歡游泳和散步，這幫助我放鬆心情。', 'profile21.jpg'),
+(22, 177.00, 78.30, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '健身是一種挑戰，也是一種熱情的表現。', 'profile22.jpg'),
+(23, 166.70, 59.00, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '瑜伽和跳舞是我平時的愛好，幫助我保持活力。', 'profile23.jpg'),
+(24, 173.50, 66.80, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '專注於健康管理，目標是達到更好的身材比例。', 'profile24.jpg'),
+(25, 165.80, 55.70, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '喜歡健身房訓練，並規劃了個人的健身計畫。', 'profile25.jpg'),
+(26, 178.20, 74.90, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '希望提升力量並保持身體健康，健身是一種生活方式。', 'profile26.jpg'),
+(27, 163.40, 50.80, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '經常參加有氧運動課程，喜歡跳舞和普拉提。', 'profile27.jpg'),
+(28, 171.70, 68.10, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '目標是完成一次登山挑戰，並提升體能。', 'profile28.jpg'),
+(29, 159.90, 49.50, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量','我喜歡普拉提和瑜伽，這是我平衡身心的方式。', 'profile29.jpg'),
+(30, 180.50, 82.40, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量','希望提升速度和耐力，成為更好的運動員。', 'profile30.jpg'),
+(31, 172.50, 65.80, '增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量', '我是一名戶外運動愛好者，特別熱愛登山與跑步，並定期進行力量訓練來保持體能。', 'profile31.jpg'),
+(32, 168.90, 58.70,'增肌, 減脂, 提高耐力, 增強體能 ,健康維持, 提高核心能量','平時喜歡瑜伽與普拉提，熱衷於通過運動來釋放壓力並保持身體健康。', 'profile32.jpg');
+
+
+INSERT INTO member_auth (member_id, email, member_password, last_login) VALUES
+(1, 'zhangdaming01@gmail.com', 'password123', '2025-01-12 08:30:00'),
+(2, 'lixiaomei02@gmail.com', 'mypassword321', '2025-01-11 09:15:00'),
+(3, 'wangzhiming03@yahoo.com', '1234qwerty', '2025-01-10 10:00:00'),
+(4, 'chenyijun04@hotmail.com', 'yoga1234', '2025-01-09 14:45:00'),
+(5, 'linziming05@gmail.com', 'running123', '2025-01-08 15:30:00'),
+(6, 'huangyiting06@gmail.com', 'password987', '2025-01-07 11:00:00'),
+(7, 'liujianguo07@yahoo.com', 'weightlifting123', '2025-01-06 16:00:00'),
+(8, 'xusiwen08@gmail.com', 'dance4567', '2025-01-05 17:00:00'),
+(9, 'zhangjiayu09@hotmail.com', 'cycling1234', '2025-01-04 13:30:00'),
+(10, 'lizhihan10@gmail.com', 'fitness2025', '2025-01-03 08:00:00'),
+(11, 'zhouxiaopeng11@yahoo.com', 'password876', '2025-01-02 09:20:00'),
+(12, 'liushiha12@gmail.com', 'strength1234', '2025-01-01 10:45:00'),
+(13, 'chenhongzhi13@yahoo.com', 'running789', '2024-12-31 14:30:00'),
+(14, 'linxinru14@hotmail.com', 'swimming4321', '2024-12-30 12:10:00'),
+(15, 'zhengyongcheng15@gmail.com', 'yoga5678', '2024-12-29 11:00:00'),
+(16, 'yanglihua16@yahoo.com', 'cycling321', '2024-12-28 17:20:00'),
+(17, 'zhangjiahao17@gmail.com', 'fitness9876', '2024-12-27 16:10:00'),
+(18, 'wangmeixia18@hotmail.com', 'strength2025', '2024-12-26 15:00:00'),
+(19, 'linmingjie19@yahoo.com', 'dance12345', '2024-12-25 10:00:00'),
+(20, 'huangyiwen20@gmail.com', 'yoga567', '2024-12-24 09:40:00'),
+(21, 'zhoujianzhong21@gmail.com', 'running2025', '2024-12-23 14:25:00'),
+(22, 'zhangchenhui22@hotmail.com', 'swimming678', '2024-12-22 13:30:00'),
+(23, 'chenjianxi23@yahoo.com', 'yoga2025', '2024-12-21 11:50:00'),
+(24, 'linlixuan24@gmail.com', 'lifting321', '2024-12-20 16:35:00'),
+(25, 'liujunjie25@hotmail.com', 'cycling9876', '2024-12-19 15:10:00'),
+(26, 'wangxiaowen26@gmail.com', 'fitness54321', '2024-12-18 14:30:00'),
+(27, 'lixinhao27@yahoo.com', 'jumpdance234', '2024-12-17 11:00:00'),
+(28, 'zhoujiayi28@gmail.com', 'yoga4567', '2024-12-16 13:15:00'),
+(29, 'zhangzhiyao29@hotmail.com', 'boxing1234', '2024-12-15 10:45:00'),
+(30, 'lixiaoyi30@yahoo.com', 'weightlifting4321', '2024-12-14 08:30:00'),
+(31, 'yangziting31@gmail.com', 'outdoor5678', '2025-01-12 18:45:00'),
+(32, 'wangzihao32@hotmail.com', 'yoga7890', '2025-01-12 19:30:00');
+
+select * from member_auth;
+select * from member_profile;
 select * from member_basic;
 
 
@@ -279,9 +375,8 @@ VALUES
 ('P054', '護踝', '高彈性運動護踝，適合多種運動。', '運動護具', NULL, 10.00, 'images/ankle_support.jpg'),
 ('P055', '護肩', '加厚型運動護肩，支撐肩部運動。', '運動護具', NULL, 25.00, 'images/shoulder_support.jpg');
 
-drop table Vedios;
 CREATE TABLE Videos (
-    id INT AUTO_INCREMENT PRIMARY KEY,   -- 影片 ID (主鍵、自增)
+    videos_id INT AUTO_INCREMENT PRIMARY KEY,   -- 影片 ID (主鍵、自增)
     title VARCHAR(255) NOT NULL,         -- 影片標題
     description TEXT,                    -- 影片描述
     video_url VARCHAR(255) NOT NULL,     -- 影片 URL
@@ -342,3 +437,171 @@ VALUES
     ('交叉腿開合跳', '增加靈活性與心肺耐力', 'https://example.com/video44', '居家有氧', 1),
     ('有氧快走模擬', '低衝擊的心肺功能訓練', 'https://example.com/video45', '居家有氧', 1);
 select * from Videos;
+
+
+#create database gym_database;
+#use gym_database;
+#show warnings;
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,         
+    member_id INT NOT NULL,          -- 外鍵，參照 member 資料表                   
+    total_amount DECIMAL(10, 0) NOT NULL,             
+    status VARCHAR(50) NOT NULL,                      
+    self_pickup_store TEXT NOT NULL,                  
+    payment_method VARCHAR(50) NOT NULL,             
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
+    
+);
+desc orders;
+#drop table orders;
+
+INSERT INTO orders (member_id, total_amount, status, self_pickup_store, payment_method)
+VALUES
+(1, 150, 'pending', '台南市中西區永華路一段100號', '信用卡'),
+(2, 250, 'completed', '台南市東區東安路200號', '現金'),
+(3, 99, 'canceled', '台南市北區公園路300號', '信用卡'),
+(4, 300, 'pending', '台南市安平區健康路400號', '現金'),
+(5, 450, 'completed', '台南市南區大同路500號', '信用卡'),
+(6, 120, 'pending', '台南市新營區中正路600號', '現金'),
+(7, 200, 'completed', '台南市永康區文化路700號', '信用卡'),
+(8, 330, 'canceled', '台南市安南區城北路800號', '現金'),
+(9, 175, 'pending', '台南市歸仁區中山路900號', '信用卡'),
+(10, 550, 'completed', '台南市仁德區成功路1000號', '現金'),
+(11, 120, 'pending', '台南市佳里區民生路1100號', '信用卡'),
+(12, 300, 'completed', '台南市麻豆區中山路1200號', '現金'),
+(13, 410, 'pending', '台南市新化區和平路1300號', '信用卡'),
+(14, 95, 'canceled', '台南市柳營區中正路1400號', '現金'),
+(15, 210, 'completed', '台南市官田區和平路1500號', '信用卡'),
+(16, 305, 'pending', '台南市鹽水區民權路1600號', '現金'),
+(17, 480, 'completed', '台南市善化區中山路1700號', '信用卡'),
+(18, 150, 'canceled', '台南市新市區中正路1800號', '現金'),
+(19, 225, 'pending', '台南市大內區中華路1900號', '信用卡'),
+(20, 310, 'completed', '台南市玉井區中正路2000號', '現金'),
+(21, 95, 'pending', '台南市楠西區中山路2100號', '信用卡'),
+(22, 215, 'completed', '台南市左鎮區中華路2200號', '現金'),
+(23, 405, 'pending', '台南市南化區中正路2300號', '信用卡'),
+(24, 310, 'canceled', '台南市白河區中山路2400號', '現金'),
+(25, 220, 'completed', '台南市東山區民權路2500號', '信用卡'),
+(26, 500, 'pending', '台南市六甲區和平路2600號', '現金'),
+(27, 130, 'completed', '台南市後壁區中華路2700號', '信用卡'),
+(28, 345, 'canceled', '台南市七股區中山路2800號', '現金'),
+(29, 290, 'pending', '台南市將軍區中正路2900號', '信用卡'),
+(30, 425, 'completed', '台南市北門區中華路3000號', '現金');
+
+select * from orders;
+#delete from orders;
+
+
+CREATE TABLE order_items (
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY, 
+    order_id INT NOT NULL,                        -- 外鍵，參照 orders 資料表
+    product_id INT NOT NULL,                      -- 外鍵，參照 products 資料表
+    quantity INT NOT NULL,                        -- 商品數量
+    total_price DECIMAL(10, 0) NOT NULL,          -- 商品總金額
+    rental_days INT NOT NULL,                     -- 租借天數
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 訂單項目建立時間
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 訂單項目更新時間
+    
+);
+-- FOREIGN KEY (order_id) REFERENCES orders(order_id), -- 設定外鍵
+-- FOREIGN KEY (product_id) REFERENCES products(product_id) -- 設定外鍵
+
+INSERT INTO order_items (order_id, product_id, quantity, total_price, rental_days, created_at, updated_at)
+VALUES
+(1, 1, 2, 300, 3, '2025-01-10 10:00:00', '2025-01-10 10:00:00'),
+(2, 2, 1, 150, 2, '2025-01-10 11:00:00', '2025-01-10 11:00:00'),
+(3, 3, 3, 450, 5, '2025-01-11 09:30:00', '2025-01-11 09:30:00'),
+(4, 4, 1, 120, 1, '2025-01-11 14:20:00', '2025-01-11 14:20:00'),
+(5, 5, 2, 250, 2, '2025-01-12 08:00:00', '2025-01-12 08:00:00'),
+(6, 6, 4, 600, 6, '2025-01-12 15:30:00', '2025-01-12 15:30:00'),
+(7, 7, 2, 500, 4, '2025-01-13 13:45:00', '2025-01-13 13:45:00'),
+(8, 8, 3, 330, 3, '2025-01-13 16:10:00', '2025-01-13 16:10:00'),
+(9, 9, 1, 200, 2, '2025-01-14 09:20:00', '2025-01-14 09:20:00'),
+(10, 10, 5, 750, 5, '2025-01-14 12:00:00', '2025-01-14 12:00:00'),
+(11, 11, 2, 400, 4, '2025-01-15 10:30:00', '2025-01-15 10:30:00'),
+(12, 12, 1, 150, 3, '2025-01-15 11:45:00', '2025-01-15 11:45:00'),
+(13, 13, 3, 450, 6, '2025-01-16 14:10:00', '2025-01-16 14:10:00'),
+(14, 14, 2, 240, 2, '2025-01-16 16:00:00', '2025-01-16 16:00:00'),
+(15, 15, 1, 180, 3, '2025-01-17 09:00:00', '2025-01-17 09:00:00'),
+(16, 16, 4, 600, 6, '2025-01-17 10:45:00', '2025-01-17 10:45:00'),
+(17, 17, 2, 420, 4, '2025-01-18 11:30:00', '2025-01-18 11:30:00'),
+(18, 18, 3, 360, 3, '2025-01-18 14:00:00', '2025-01-18 14:00:00'),
+(19, 19, 1, 150, 2, '2025-01-19 12:20:00', '2025-01-19 12:20:00'),
+(20, 20, 2, 300, 3, '2025-01-19 15:10:00', '2025-01-19 15:10:00'),
+(21, 21, 2, 400, 4, '2025-01-20 09:00:00', '2025-01-20 09:00:00'),
+(22, 22, 3, 450, 3, '2025-01-20 11:15:00', '2025-01-20 11:15:00'),
+(23, 23, 1, 120, 2, '2025-01-21 10:30:00', '2025-01-21 10:30:00'),
+(24, 24, 4, 720, 6, '2025-01-21 13:00:00', '2025-01-21 13:00:00'),
+(25, 25, 2, 300, 3, '2025-01-22 14:45:00', '2025-01-22 14:45:00'),
+(26, 26, 3, 450, 3, '2025-01-22 16:30:00', '2025-01-22 16:30:00'),
+(27, 27, 1, 200, 2, '2025-01-23 09:15:00', '2025-01-23 09:15:00'),
+(28, 28, 2, 350, 5, '2025-01-23 11:00:00', '2025-01-23 11:00:00'),
+(29, 29, 4, 480, 4, '2025-01-24 08:45:00', '2025-01-24 08:45:00'),
+(30, 30, 3, 540, 6, '2025-01-24 14:30:00', '2025-01-24 14:30:00'),
+(31, 31, 2, 300, 3, '2025-01-25 09:20:00', '2025-01-25 09:20:00'),
+(32, 32, 5, 600, 6, '2025-01-25 12:10:00', '2025-01-25 12:10:00'),
+(33, 33, 3, 450, 3, '2025-01-26 10:45:00', '2025-01-26 10:45:00'),
+(34, 34, 1, 150, 2, '2025-01-26 13:30:00', '2025-01-26 13:30:00'),
+(35, 35, 2, 240, 4, '2025-01-27 09:50:00', '2025-01-27 09:50:00'),
+(36, 36, 3, 360, 3, '2025-01-27 11:20:00', '2025-01-27 11:20:00'),
+(37, 37, 4, 600, 6, '2025-01-28 08:30:00', '2025-01-28 08:30:00'),
+(38, 38, 1, 120, 2, '2025-01-28 12:40:00', '2025-01-28 12:40:00'),
+(39, 39, 2, 250, 5, '2025-01-29 09:10:00', '2025-01-29 09:10:00'),
+(40, 40, 3, 450, 3, '2025-01-29 14:15:00', '2025-01-29 14:15:00'),
+(41, 41, 1, 200, 2, '2025-01-30 09:00:00', '2025-01-30 09:00:00'),
+(42, 42, 4, 600, 6, '2025-01-30 10:45:00', '2025-01-30 10:45:00'),
+(43, 43, 2, 300, 3, '2025-01-31 11:30:00', '2025-01-31 11:30:00'),
+(44, 44, 5, 750, 5, '2025-01-31 15:10:00', '2025-01-31 15:10:00'),
+(45, 45, 3, 450, 3, '2025-02-01 08:50:00', '2025-02-01 08:50:00'),
+(46, 46, 2, 250, 2, '2025-02-01 12:30:00', '2025-02-01 12:30:00'),
+(47, 47, 1, 180, 3, '2025-02-02 09:10:00', '2025-02-02 09:10:00'),
+(48, 48, 3, 540, 6, '2025-02-02 13:40:00', '2025-02-02 13:40:00'),
+(49, 49, 2, 300, 3, '2025-02-03 10:20:00', '2025-02-03 10:20:00'),
+(50, 50, 4, 480, 4, '2025-02-03 15:00:00', '2025-02-03 15:00:00'),
+(51, 51, 3, 450, 3, '2025-02-04 11:10:00', '2025-02-04 11:10:00'),
+(52, 52, 1, 120, 2, '2025-02-04 14:30:00', '2025-02-04 14:30:00'),
+(53, 53, 2, 400, 4, '2025-02-05 08:45:00', '2025-02-05 08:45:00'),
+(54, 54, 3, 540, 6, '2025-02-05 13:50:00', '2025-02-05 13:50:00'),
+(55, 55, 2, 300, 3, '2025-02-06 09:20:00', '2025-02-06 09:20:00');
+
+select * from order_items;
+ #drop table order_items;
+
+CREATE TABLE payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY, 
+    order_id INT NOT NULL,                     -- 外鍵，參照 orders 資料表
+    amount DECIMAL(10, 0) NOT NULL,            -- 付款金額
+    payment_method VARCHAR(50) NOT NULL,       -- 付款方式 (例如：信用卡、現金)
+    payment_status VARCHAR(50) NOT NULL,       -- 付款狀態 (例如：success、failed、pending)
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 付款時間
+    
+);
+-- FOREIGN KEY (order_id) REFERENCES orders(order_id) -- 設定外鍵，關聯到 orders 表
+
+INSERT INTO payments (order_id, amount, payment_method, payment_status, payment_date) 
+VALUES
+(1, 150, '信用卡', 'success', '2025-01-10 14:20:00'),
+(2, 250, '現金', 'success', '2025-01-10 15:30:00'),
+(3, 99, '信用卡', 'failed', '2025-01-11 10:00:00'),
+(4, 300, '現金', 'success', '2025-01-11 11:45:00'),
+(5, 450, '信用卡', 'success', '2025-01-12 09:20:00'),
+(6, 120, '現金', 'pending', '2025-01-12 10:50:00'),
+(7, 200, '信用卡', 'failed', '2025-01-13 13:30:00'),
+(8, 330, '現金', 'success', '2025-01-13 14:10:00'),
+(9, 175, '信用卡', 'pending', '2025-01-14 08:50:00'),
+(10, 550, '現金', 'success', '2025-01-14 16:20:00'),
+(11, 120, '信用卡', 'success', '2025-01-15 11:00:00'),
+(12, 300, '現金', 'failed', '2025-01-15 12:30:00'),
+(13, 410, '信用卡', 'success', '2025-01-16 14:50:00'),
+(14, 95, '現金', 'pending', '2025-01-16 15:40:00'),
+(15, 210, '信用卡', 'success', '2025-01-17 09:10:00'),
+(16, 305, '現金', 'success', '2025-01-17 10:20:00'),
+(17, 480, '信用卡', 'success', '2025-01-18 13:50:00'),
+(18, 150, '現金', 'failed', '2025-01-18 14:30:00'),
+(19, 225, '信用卡', 'pending', '2025-01-19 11:20:00'),
+(20, 310, '現金', 'success', '2025-01-19 15:00:00');
+
+select * from payments;
+#drop table payments;
+#delete from payments;
