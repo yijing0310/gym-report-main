@@ -313,16 +313,9 @@ if (! isset($pageName)) {
     </li>
     
 
-
-
-
-
-
-
-
-
-
   </ul>
 
 </aside>
 <!-- / Menu -->
+ <!-- Layout container -->
+ <div class="layout-page">
