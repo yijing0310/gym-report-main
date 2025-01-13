@@ -36,20 +36,22 @@ if(empty($r)){
                 <label class="col-sm-2 col-form-label" for="basic-default-article_id">文章ID</label>
                 <div class="col-sm-10">
                 <input type="text" class="form-control" id="basic-default-article_id" name="article_id" value="<?=$r['article_id'] ?>" disabled >
+                <div id="article_idError" class="mt-3" style="color: red;"></div>
                 </div>
             </div>
           <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-title">標題</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="basic-default-title" placeholder="title" name="title" value="<?=$r['title']?>">
-              <div id="titleError" class="color-danger my-2"></div>
+              <div id="titleError" class="mt-3" style="color: red;"></div>
             </div>
             
           </div>
           <div class="row mb-6">
-            <label class="col-sm-2 col-form-label" for="basic-default-author">作者ID</label>
+            <label class="col-sm-2 col-form-label" for="basic-default-author_id">作者工號</label>
             <div class="col-sm-10">
-              <input type="number" class="form-control " id="basic-default-author" name="author_id" placeholder="ID" min=1  value="<?=$r['author_id']?>" require>
+              <input type="text" class="form-control " id="basic-default-author_id" name="author_id" placeholder="ID"  value="<?=$r['author_id']?>" require>
+              <div id="author_idError" class="mt-3" style="color: red;"></div>
             </div>
             
           </div>
@@ -57,7 +59,7 @@ if(empty($r)){
             <label class="col-sm-2 col-form-label" for="basic-default-content">文章內容</label>
             <div class="col-sm-10">
               <textarea id="basic-default-content" class="form-control" placeholder="Hi, Do you have a moment to talk Joe?" aria-label="Hi, Do you have a moment to talk Joe?" aria-describedby="basic-icon-default-message2" rows="9" name="content" ><?=$r['content']?></textarea>
-              <div id="contentError"></div>
+              <div id="contentError" class="mt-3" style="color: red;"></div>
             </div>
           </div>
           <div class="row" >
@@ -141,6 +143,7 @@ if(empty($r)){
     const noEditModal = new bootstrap.Modal('#no-edit-modal')
     const title = document.querySelector('#basic-default-title')
     const content = document.querySelector('#basic-default-content')
+    const author_id = document.querySelector('#basic-default-author_id')
     const textCount = document.querySelector('#textCount')
 
     textCount.innerHTML = `${content.value.length} 個字`;
@@ -151,21 +154,29 @@ if(empty($r)){
     const sendData = e=>{
         e.preventDefault();
         content.classList.remove('btn-outline-danger')
-        textCount.classList.remove('btn-outline-danger')
-        
+        document.querySelector('#contentError').innerHTML =''
+        title.classList.remove('btn-outline-danger')
+        document.querySelector('#titleError').innerHTML =''
+        author_id.classList.remove('btn-outline-danger')
+        document.querySelector('#author_idError').innerHTML=''
+
         let isPass = true 
 
-        if(title.value.length <= 5){
+        if(title.value.length <= 4){
             isPass=false;
             document.querySelector('#titleError').innerHTML ='標題不能小於5個字'
             title.classList.add('btn-outline-danger')
         }
-        if(content.value.length <= 30){
+        if(author_id.value.length !== 6){
+            isPass=false;
+            document.querySelector('#author_idError').innerHTML ='工號錯誤 ( 提示：6碼 )'
+            author_id.classList.add('btn-outline-danger')
+        }
+        if(content.value.length < 30){
             isPass=false;
             document.querySelector('#contentError').innerHTML ='內文不能小於30個字'
             content.classList.add('btn-outline-danger')
         }
-
         
         if (isPass) {
           const fd = new FormData(document.forms[0]);

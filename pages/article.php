@@ -4,17 +4,10 @@ $title ="文章管理";
 $pageName="article";
 
 $article_id = empty($_GET['article_id'])? 0 : intval($_GET['article_id']);
-// if(empty($article_id)){
-//   header('Location: article.php');
-//   exit;
-// }
+
 
 $allsql="SELECT * FROM articles WHERE article_id = $article_id";
 $r = $pdo->query($allsql)->fetch();
-// if(empty($r)){
-//   header('Location: article.php');
-//   exit;
-// }
 
 
 
@@ -198,7 +191,7 @@ $r = $pdo->query($all_sql)->fetch();
                   </div>
                 </div>
                 <div class="row mb-6">
-                  <label class="col-sm-2 col-form-label" for="basic-default-author">作者ID</label>
+                  <label class="col-sm-2 col-form-label" for="basic-default-author">作者工號</label>
                   <div class="col-sm-10">
                     <input type="number" class="form-control " id="basic-default-author" name="author_id" placeholder="ID" min=1  value="" disabled>
                   </div>

@@ -20,23 +20,23 @@ $pageName = "article-add";
           <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-title">標題</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="basic-default-title" placeholder="title" name="title">
-              <div id="titleError" class="color-danger my-2"></div>
+              <input type="text" class="form-control" id="basic-default-title" placeholder="請輸入標題" name="title">
+              <div id="titleError"  style="color: red;" class="mt-3"></div>
             </div>
             
           </div>
           <div class="row mb-6">
-            <label class="col-sm-2 col-form-label" for="basic-default-author">作者ID</label>
+            <label class="col-sm-2 col-form-label" for="basic-default-author">作者工號</label>
             <div class="col-sm-10">
-              <input type="number" class="form-control " id="basic-default-author" name="author_id" placeholder="ID" min=1 require>
+              <input type="text" class="form-control " id="basic-default-author_id" name="author_id" placeholder="請輸入工號" require >
+              <div id="author_idError"  class="mt-3" style="color: red;" ></div>
             </div>
-            
           </div>
           <div class="row mb-2">
             <label class="col-sm-2 col-form-label" for="basic-default-content">文章內容</label>
             <div class="col-sm-10">
-              <textarea id="basic-default-content" class="form-control" placeholder="Hi, Do you have a moment to talk Joe?" aria-label="Hi, Do you have a moment to talk Joe?" aria-describedby="basic-icon-default-message2" rows="9" name="content" ></textarea>
-              <div id="contentError"></div>
+              <textarea id="basic-default-content" class="form-control" placeholder="請輸入文章內容" rows="9" name="content" ></textarea>
+              <div id="contentError"  class="mt-3" style="color: red;"></div>
             </div>
           </div>
           <div class="row" >
@@ -97,6 +97,7 @@ $pageName = "article-add";
 <script>
     const title = document.querySelector('#basic-default-title')
     const content = document.querySelector('#basic-default-content')
+    const author_id = document.querySelector('#basic-default-author_id')
     const textCount = document.querySelector('#textCount')
     
     content.addEventListener('input', () => {
@@ -106,20 +107,30 @@ $pageName = "article-add";
     const sendData = e=>{
         e.preventDefault();
         content.classList.remove('btn-outline-danger')
-        textCount.classList.remove('btn-outline-danger')
+        document.querySelector('#contentError').innerHTML =''
+        title.classList.remove('btn-outline-danger')
+        document.querySelector('#titleError').innerHTML =''
+        author_id.classList.remove('btn-outline-danger')
+        document.querySelector('#author_idError').innerHTML=''
         
         let isPass = true 
 
-        if(title.value.length <= 5){
+        if(title.value.length <= 4){
             isPass=false;
             document.querySelector('#titleError').innerHTML ='標題不能小於5個字'
             title.classList.add('btn-outline-danger')
         }
-        if(content.value.length <= 30){
+        if(author_id.value.length !== 6){
+            isPass=false;
+            document.querySelector('#author_idError').innerHTML ='工號錯誤 ( 提示：6碼 )'
+            author_id.classList.add('btn-outline-danger')
+        }
+        if(content.value.length < 30){
             isPass=false;
             document.querySelector('#contentError').innerHTML ='內文不能小於30個字'
             content.classList.add('btn-outline-danger')
         }
+        
 
         
         if (isPass) {
