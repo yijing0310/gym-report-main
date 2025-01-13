@@ -38,10 +38,7 @@ $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
 
 if($totalRows>0){
-  // if($page > $totalPages){
-  //     header('Location:?page='.$totalPages);
-  //     exit;
-  // }
+  
   $sql = sprintf("SELECT * FROM `articles` %s
   LIMIT %s, %s", $where,
   ($page -1) * $perPage,
@@ -53,10 +50,7 @@ $totalPages = ceil($totalRows/$perPage);
 
 $all_sql="SELECT * FROM articles WHERE article_id = $article_id";
 $r = $pdo->query($all_sql)->fetch();
-// if(empty($r)){
-//     header('Location: article.php');
-//     exit;
-// }
+
 ?>
 <?php include __DIR__ . '/includes/html-header.php'; ?>
 <style>

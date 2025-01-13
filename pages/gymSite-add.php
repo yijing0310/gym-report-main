@@ -97,6 +97,18 @@ $pageName = "gymSite-add";
             <div id="emailError" class="color-danger my-2"></div>
           </div>
           <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-image_url">圖片</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control " id="basic-default-image_url" name="image_url" placeholder="請輸入圖片訊息" require>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-author">位置</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control " id="basic-default-google_map_link" name="google_map_link" placeholder="請輸入位置訊息" require>
+            </div>
+          </div>
+          <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-manager">經理</label>
             <div class="col-sm-10">
               <input type="text" class="form-control " id="basic-default-manager" name="manager" placeholder="請輸入經理名稱" require>

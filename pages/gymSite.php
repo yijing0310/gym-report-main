@@ -99,6 +99,8 @@ $totalPages = ceil($totalRows/$perPage);
           <th>聯絡電話</th>
           <th>email</th>
           <th>經理</th>
+          <th>圖片</th>
+          <th>位置</th>
           <th>創建時間</th>
           <th>編輯</th>
           <th>刪除</th>
@@ -130,9 +132,17 @@ $totalPages = ceil($totalRows/$perPage);
           <td title="<?=htmlentities($v['email'])?>">
             <?=htmlentities($v['email'])?>
           </td>
-          <td title="<?=htmlentities($v['manager'])?>">
+          <td style="max-width: 120px" title="<?=htmlentities($v['manager'])?>">
             <?=htmlentities($v['manager'])?>
           </td>
+          <td style="max-width: 120px" title="<?=htmlentities($v['image_url'])?>">
+            <?=htmlentities($v['image_url'])?>
+          </td>
+          <td style="max-width: 120px" title="<?=htmlentities($v['google_map_link'])?>">
+            <?=htmlentities($v['google_map_link'])?>
+          </td>
+          
+
           <td style="max-width: 150px" title="<?=$v['created_at']?>">
             <?=$v['created_at']?>
           </td>

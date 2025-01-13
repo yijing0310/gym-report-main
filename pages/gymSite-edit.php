@@ -126,6 +126,18 @@ if(empty($r)){
               <input type="text" class="form-control " id="basic-default-manager" name="manager" placeholder="請輸入經理名稱" value="<?=$r['manager']?>" require>
             </div>
           </div>
+          <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-image_url">圖片</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control " id="basic-default-image_url" name="image_url" placeholder="請輸入圖片訊息" value="<?=$r['image_url']?>" require>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-author">位置</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control " id="basic-default-google_map_link" name="google_map_link" placeholder="請輸入位置訊息" value="<?=$r['google_map_link']?>"require>
+            </div>
+          </div>
           <div class="mt-6">
             <button type="submit" class="btn btn-primary me-3">確定</button>
             <button type="reset" class="btn btn-outline-secondary">重設</button>

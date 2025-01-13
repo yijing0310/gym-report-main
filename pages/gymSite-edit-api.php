@@ -21,7 +21,9 @@ SET
 `description`=?,
 `contact_info`=?,
 `email`=?,
-`manager`=?
+`manager`=?,
+`image_url`=?,
+`google_map_link`=?
 WHERE `gym_id` = ?"; 
 
 $stmt = $pdo->prepare($sql); 
@@ -35,6 +37,8 @@ $stmt -> execute([
     $_POST['tel'],
     $_POST['email'],
     $_POST['manager'],
+    $_POST['image_url'],
+    $_POST['google_map_link'],
     $_POST['gym_id']
 ]);
 $output['success'] = !!$stmt->rowCount();
