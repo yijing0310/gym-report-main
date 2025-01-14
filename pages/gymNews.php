@@ -129,7 +129,7 @@ $r = $pdo->query($all_sql)->fetch();
         </form>
       </div>
     </div>
-    
+  <?php if($totalRows>0):?> 
   <div class="table-responsive text-nowrap">
     <table class="table table-hover">
       <thead>
@@ -179,6 +179,7 @@ $r = $pdo->query($all_sql)->fetch();
       </tbody>
     </table>
   </div>
+  <?php endif?>
 </div>
 
 <!-- modal -->

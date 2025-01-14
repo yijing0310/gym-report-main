@@ -46,8 +46,7 @@ if($totalRows>0){
 
 $totalPages = ceil($totalRows/$perPage);
 
-$all_sql="SELECT * FROM articles WHERE article_id = $article_id";
-$r = $pdo->query($all_sql)->fetch();
+
 
 ?>
 <?php include __DIR__ . '/includes/html-header.php'; ?>
@@ -133,7 +132,7 @@ $r = $pdo->query($all_sql)->fetch();
         </form>
       </div>
     </div>
-    
+  <?php if($totalRows>0):?>
   <div class="table-responsive text-nowrap">
     <table class="table table-hover">
       <thead>
@@ -163,6 +162,7 @@ $r = $pdo->query($all_sql)->fetch();
           <td title="<?=$v['author_id']?>"><?=$v['author_id']?></td>
           <td style="max-width: 150px" title="<?=$v['created_at']?>"><?=$v['created_at']?></td>
           <td style="max-width: 150px" title="<?=$v['updated_at']?>"><?=$v['updated_at']?></td>
+
           <td>
             <?php if ($v['uploadStatus']== 1) :?>
               <span class="badge bg-label-primary  me-1">已發布</span>
@@ -183,6 +183,7 @@ $r = $pdo->query($all_sql)->fetch();
       </tbody>
     </table>
   </div>
+  <?php endif?>
 </div>
 
 <!-- modal -->

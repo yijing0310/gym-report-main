@@ -291,7 +291,7 @@ $totalPages = ceil($totalRows/$perPage);
                       document.getElementById('basic-default-contact_info').value = data.gyms.contact_info;
                       document.getElementById('basic-default-email').value = data.gyms.email;
                       document.getElementById('basic-default-manager').value = data.gyms.manager;
-                      document.getElementById('basic-default-image_url').value = data.gyms.image_url;
+                      document.getElementById('basic-default-image_url,').value = data.gyms.image_url;
                       document.getElementById('basic-default-google_map_link').value = data.gyms.google_map_link;
                   } else {
                       alert(data.error || '無法加載文章');
