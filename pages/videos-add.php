@@ -44,12 +44,19 @@ $pageName = "videos-add";
             </div>
           </div>
           <div class="row mb-6">
-            <label class="col-sm-2 col-form-label" for="basic-default-category">分類</label>
+            <label class="col-sm-2 col-form-label" for="basic-default-checkbox" >影片分類</label >
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="basic-default-category" placeholder="category" name="category">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <select id="sendNotification" class="form-select" name="category_name">
+                            <option value="居家徒手健身" selected="">居家徒手健身</option>
+                            <option value="居家器械運動">居家器械運動</option>
+                            <option value="居家有氧">居家有氧</option>
+                        </select>
+                    </div>
+                </div>
             </div>
           </div>
-          
           <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-checkbox" >發布狀態</label >
             <div class="col-sm-10">
