@@ -278,19 +278,19 @@ if (! isset($pageName)) {
           </li>
       </ul>
       </li>
-    <li class="menu-item  <?= in_array($pageName, ['reserveClass', 'reserveClass-add', 'reserveClass-edit']) ? 'active' : '' ?>">
-        <a href="reserveClass.php" target="_blank" class="menu-link  menu-toggle">
+    <li class="menu-item  <?= in_array($pageName, ['appointmentsClass', 'appointmentsClass-add', 'appointmentsClass-edit']) ? 'active' : '' ?>">
+        <a href="appointmentsClass.php" target="_blank" class="menu-link  menu-toggle">
           <i class="menu-icon fa-regular fa-envelope"></i>
           <div class="text-truncate" data-i18n="Support">課程預約管理</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-          <a href="reserveClass.php" class="menu-link">
+          <a href="appointmentsClass.php" class="menu-link">
             <div class="text-truncate" data-i18n="Analytics">課程預約列表</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="reserveClass-add.php" class="menu-link ">
+          <a href="appointmentsClass-add.php" class="menu-link ">
             <div class="text-truncate" data-i18n="Analytics">新增課程預約</div>
           </a>
         </li>
