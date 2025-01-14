@@ -2,6 +2,16 @@
 CREATE DATABASE gym_database;
 USE gym_database;
 
+CREATE TABLE appointments (
+  appointment_id int NOT NULL,
+  member_id int NOT NULL,
+  course_id int NOT NULL,
+  status enum('pending','confirmed','cancelled') COLLATE utf8mb4_general_ci DEFAULT 'pending',
+  created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)
+
+
 -- course課程
 CREATE TABLE `courses` (
   `course_id` int NOT NULL,
