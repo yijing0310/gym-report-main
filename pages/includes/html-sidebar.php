@@ -127,7 +127,7 @@ if (! isset($pageName)) {
       </a>
       <ul class="menu-sub">
         <li class="menu-item">
-          <a href="gymMembe.php" class="menu-link">
+          <a href="gymMember.php" class="menu-link">
             <div class="text-truncate" data-i18n="Analytics">會員列表</div>
           </a>
         </li>
