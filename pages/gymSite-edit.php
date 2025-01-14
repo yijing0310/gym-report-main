@@ -53,6 +53,18 @@ if(empty($r)){
             </div>
           </div>
           <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-open">開門時間</label>
+            <div class="col-sm-10">
+              <input type="time" class="form-control " id="basic-default-open" name="open" value="<?=$r['opening_hours']?>" require>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-colse">關門時間</label>
+            <div class="col-sm-10">
+              <input type="time" class="form-control " id="basic-default-colse" name="colse" value="<?=$r['closing_hours']?>"require >
+            </div>
+          </div>
+          <div class="row mb-6">
             <?php
             $business_days = explode(",", str_replace(' ', '', $r['business_days'])); 
             ?>
@@ -88,18 +100,7 @@ if(empty($r)){
             </div>
             </div>
           </div>
-          <div class="row mb-6">
-            <label class="col-sm-2 col-form-label" for="basic-default-open">開門時間</label>
-            <div class="col-sm-10">
-              <input type="time" class="form-control " id="basic-default-open" name="open" value="<?=$r['opening_hours']?>" require>
-            </div>
-          </div>
-          <div class="row mb-6">
-            <label class="col-sm-2 col-form-label" for="basic-default-colse">關門時間</label>
-            <div class="col-sm-10">
-              <input type="time" class="form-control " id="basic-default-colse" name="colse" value="<?=$r['closing_hours']?>"require >
-            </div>
-          </div>
+          
           <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-description">描述</label>
             <div class="col-sm-10">

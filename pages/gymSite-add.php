@@ -32,6 +32,20 @@ $pageName = "gymSite-add";
             </div>
           </div>
           <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-tel">聯絡電話</label>
+            <div class="col-sm-10">
+              <input type="tel" class="form-control " id="basic-default-tel" name="tel" placeholder="065800000"  require>
+              <div id="telError"  class="mt-3" style="color: red;"></div>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-sm-2 col-form-label" for="basic-default-author">email</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control " id="basic-default-email" name="email" placeholder="XXX@XX.XX" require>
+              <div id="emailError"  class="mt-3" style="color: red;"></div>
+            </div>
+          </div>
+          <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-open">營業星期</label>
             <div class="col-sm-10">
             <div class="form-check form-check-inline mt-3">
@@ -83,20 +97,7 @@ $pageName = "gymSite-add";
               <div id="descriptionError"  class="mt-3" style="color: red;"></div>
             </div>
           </div>
-          <div class="row mb-6">
-            <label class="col-sm-2 col-form-label" for="basic-default-tel">聯絡電話</label>
-            <div class="col-sm-10">
-              <input type="tel" class="form-control " id="basic-default-tel" name="tel" placeholder="065800000"  require>
-              <div id="telError"  class="mt-3" style="color: red;"></div>
-            </div>
-          </div>
-          <div class="row mb-6">
-            <label class="col-sm-2 col-form-label" for="basic-default-author">email</label>
-            <div class="col-sm-10">
-              <input type="email" class="form-control " id="basic-default-email" name="email" placeholder="XXX@XX.XX" require>
-              <div id="emailError"  class="mt-3" style="color: red;"></div>
-            </div>
-          </div>
+          
           <div class="row mb-6">
             <label class="col-sm-2 col-form-label" for="basic-default-image_url">圖片</label>
             <div class="col-sm-10">
@@ -155,6 +156,23 @@ $pageName = "gymSite-add";
     </div>
     </div>
 </div>
+<!-- modal null -->
+<div class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true" id="null-modal">
+    <div class="modal-dialog modal-sm" role="document" >
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel2">提示</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <!-- alert -->
+            <div class="alert alert-danger" role="alert">
+            請選擇至少一天營業!
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
 
 <script>
     const email = document.querySelector('#basic-default-email')
@@ -165,24 +183,29 @@ $pageName = "gymSite-add";
     const google_map_link = document.querySelector('#basic-default-google_map_link')
     const manager = document.querySelector('#basic-default-manager')
     const image_url = document.querySelector('#basic-default-image_url')
-    const businessDays = document.querySelectorAll('input[type="checkbox"]:checked');
-    
+
+
     const sendData = e=>{
+
         e.preventDefault();
-        name.classList.remove('btn-outline-danger')
-        document.querySelector('#nameError').innerHTML =''
-        email.classList.remove('btn-outline-danger')
-         document.querySelector('#emailError').innerHTML =''
-        description.classList.remove('btn-outline-danger')
-         document.querySelector('#descriptionError').innerHTML =''
-        tel.classList.remove('btn-outline-danger')
-        document.querySelector('#telError').innerHTML =''
-        google_map_link.classList.remove('btn-outline-danger')
-         document.querySelector('#map_linkError').innerHTML =''
-        manager.classList.remove('btn-outline-danger')
-         document.querySelector('#managerError').innerHTML =''
-        image_url.classList.remove('btn-outline-danger')
-         document.querySelector('#imageError').innerHTML =''
+          name.classList.remove('btn-outline-danger')
+          document.querySelector('#nameError').innerHTML =''
+          email.classList.remove('btn-outline-danger')
+          document.querySelector('#emailError').innerHTML =''
+          description.classList.remove('btn-outline-danger')
+          document.querySelector('#descriptionError').innerHTML =''
+          tel.classList.remove('btn-outline-danger')
+          document.querySelector('#telError').innerHTML =''
+          google_map_link.classList.remove('btn-outline-danger')
+          document.querySelector('#map_linkError').innerHTML =''
+          manager.classList.remove('btn-outline-danger')
+          document.querySelector('#managerError').innerHTML =''
+          image_url.classList.remove('btn-outline-danger')
+          document.querySelector('#imageError').innerHTML =''
+          address.classList.remove('btn-outline-danger')
+          document.querySelector('#addressError').innerHTML =''
+
+
 
         function validateEmail(email) {
         const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -190,7 +213,7 @@ $pageName = "gymSite-add";
         }
         function formatPhoneNumber(tel) {
           const cleanedPhone = tel.replace(/\D/g, '');
-          if (cleanedPhone.length === 10) {
+          if (cleanedPhone.length === 9) {
           return cleanedPhone.replace(/^(\d{2})(\d{4})(\d{3})$/, '$1-$2-$3');
           } else {
           return document.querySelector('#telError').innerHTML = "長度錯誤(9碼060000000)"; 
@@ -203,12 +226,7 @@ $pageName = "gymSite-add";
           }
           return false;
         }
-        function validateImageUrl(image_url) {
-          const pattern = /^(https?:\/\/)?([\w\d\-_]+(\.[\w\d\-_]+)+)(:\d+)?(\/[\w\d\-_.,;?&%#=~+()]*)(\/)?$/i;
-          return pattern.test(image_url);
-      }
-
-
+        
 
         let isPass = true 
 
@@ -237,6 +255,11 @@ $pageName = "gymSite-add";
             document.querySelector('#telError').innerHTML ='請填寫正確電話(9碼)'
             tel.classList.add('btn-outline-danger')
         }
+        if(image_url.value.length === 0){
+            isPass=false;
+            document.querySelector('#imageError').innerHTML ='不能為空'
+            image_url.classList.add('btn-outline-danger')
+        }
         if(google_map_link.value.length < 10){
             isPass=false;
             document.querySelector('#map_linkError').innerHTML ='請填寫正確mapLink'
@@ -248,20 +271,16 @@ $pageName = "gymSite-add";
             document.querySelector('#emailError').innerHTML  ='請填寫正確email'
             email.classList.add('btn-outline-danger')
         }
-        if(!validateImageUrl(image_url.value)){
-            isPass=false;
-            document.querySelector('#imageError').innerHTML  ='請填寫正確圖片路徑'
-            image_url.classList.add('btn-outline-danger')
-        }
+        
         if(!validatePhoneNumber(tel.value)){
             isPass=false;
             document.querySelector('#telError').innerHTML  ='請填寫正確電話'
             tel.classList.add('btn-outline-danger')
         }
-        console.log(businessDays.length);
-        if (businessDays.length == 0) {
+        const mynullModal = new bootstrap.Modal('#null-modal')
+        if (document.querySelectorAll('input[name="business_days[]"]:checked').length === 0) {
             isPass = false;
-            alert('請選擇至少一個營業星期');
+            mynullModal.show();
         }
         
         if (isPass) {
