@@ -5,10 +5,8 @@ $pageName="gymNews";
 
 $news_id = empty($_GET['news_id'])? 0 : intval($_GET['news_id']);
 
-
 $allsql="SELECT * FROM gym_news WHERE news_id = $news_id";
 $r = $pdo->query($allsql)->fetch();
-
 
 $perPage = 15;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -18,11 +16,16 @@ if ($page < 1) {
 }
 
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+$status = isset($_GET['status']) ? intval($_GET['status']) :null;
+
 $where =" WHERE 1 ";
 if($keyword){
   $keyword_ = $pdo->quote("%{$keyword}%"); 
   echo $keyword_;
   $where .= " AND (title LIKE $keyword_ OR content LIKE $keyword_)";
+}
+if ($status !== null) {
+  $where .= " AND uploadStatus = $status"; 
 }
 
 $t_sql = "SELECT count(*) FROM gym_news $where";
@@ -102,8 +105,20 @@ $r = $pdo->query($all_sql)->fetch();
           <!--/ Basic Pagination -->
         </div>
       </div>
+      <!-- 篩選按鈕 -->
+      <div class="col-lg-1 d-flex align-items-center justify-content-end p-0">
+        <div class="btn-group " role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-sm btn-outline-white p-0" id="filter-published"> 
+              <span class="badge bg-label-primary  me-1 " data-status= 1>已發布</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-white p-0" id="filter-unpublished"> 
+              <span class="badge bg-label-secondary me-1" data-status= 0 >未發布</span>
+            </button>
+            
+        </div>
+      </div>
       <!-- 搜尋 -->
-      <div class="col-lg-3 me-5  d-flex align-items-center justify-content-end">
+      <div class="col-lg-2 me-5  d-flex align-items-center justify-content-end">
         <form class="d-flex  ">
             <div class="input-group">
                   <button class="input-group-text">
@@ -238,7 +253,24 @@ $r = $pdo->query($all_sql)->fetch();
 <?php include __DIR__ . '/includes/html-script.php'; ?>
 
 <script>
-    const viewButtons = document.querySelectorAll('#viewBtn');
+  // 篩選條件
+  document.querySelector('#filter-published').addEventListener('click', function() {
+      toggleFilter(1); 
+  });
+  document.querySelector('#filter-unpublished').addEventListener('click', function() {
+      toggleFilter(0);
+  });
+  function toggleFilter(status) {
+      const searchParams = new URLSearchParams(location.search);
+      if (searchParams.get('status') === String(status)) {
+          searchParams.delete('status'); 
+      } else {
+          searchParams.set('status', status); 
+      }
+      window.location.search = searchParams.toString();
+  }
+  // 詳情檢視
+  const viewButtons = document.querySelectorAll('#viewBtn');
   viewButtons.forEach(button => {
       button.addEventListener('click', function() {
           const news_id = this.getAttribute('data-news-id'); 
@@ -264,7 +296,7 @@ $r = $pdo->query($all_sql)->fetch();
               });
       });
   });
-
+    // 刪除事件
     const deleteOne = e=>{
         e.preventDefault();
         const tr = e.target.closest('tr')
