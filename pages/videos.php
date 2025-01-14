@@ -23,13 +23,20 @@ $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 $where =" WHERE 1 ";
 if($keyword){
   $keyword_ = $pdo->quote("%{$keyword}%"); 
-  echo $keyword_;
-  $where .= " AND (title LIKE $keyword_ OR content LIKE $keyword_)";
+  $where .= " AND (title LIKE $keyword_ OR description LIKE $keyword_)";
 }
 
 $t_sql = "SELECT count(*) FROM Videos $where";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; 
 
+$rows = []; # 設定預設值
+// if ($totalRows > 0) {
+//   if ($page > $totalPages) {
+//     // ob_clean();
+//     # 用戶要看的頁碼超出範圍, 跳到最後一頁
+//     header('Location: ?page=' . $totalPages);
+//     exit;
+//   }}
 
 if($totalRows>0){
   
@@ -137,7 +144,8 @@ $r = $pdo->query($all_sql)->fetch();
         <?php foreach($rows as $v):?>
         <tr>
           <td>
-            <button type="button" class="btn rounded-pill btn-icon btn-outline-secondary" data-bs-toggle="modal"  data-bs-target="#exLargeModal"  data-videos-id="<?=$v['videos_id']?>" id="viewBtn">
+            <button type="button" class="btn rounded-pill btn-icon btn-outline-secondary" 
+            data-bs-toggle="modal"  data-bs-target="#exLargeModal"  data-videos-id="<?=$v['videos_id']?>" id="viewBtn">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </td>

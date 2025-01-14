@@ -5,15 +5,18 @@
 <?php include __DIR__ . '/includes/html-content wrapper-start.php'; ?>
 <style>
   table {
-    font-size: 14px; /* 修改整個表格的字體大小 */
+    font-size: 16px; /* 修改整個表格的字體大小 */
   }
   th {
-    font-size: 16px; /* 修改表頭的字體大小 */
+    font-size: 18px; /* 修改表頭的字體大小 */
   }
 
   .table thead tr th{
     line-height: 1;
     padding:20px 5px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align:center;
   }
 .pagination .page-link {
   border-radius: 50%;
@@ -28,7 +31,7 @@
 /* 縮短表格行高 */
 .table tbody tr {
   line-height: 1.5;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .table tbody tr td {
@@ -50,7 +53,7 @@ $keyword = empty($_GET['keyword']) ? '' : $_GET['keyword'];
 $where = ' WHERE 1 '; 
 if($keyword){
   $keyword_ = $pdo->quote("%{$keyword}%"); 
-  $where .= " AND name LIKE $keyword_";
+  $where .= " AND (name LIKE $keyword_ OR base_price LIKE $keyword_)";
 }
 
 $t_sql = "SELECT COUNT(1) FROM `products` $where";
@@ -97,10 +100,10 @@ $rows = $pdo->query($sql)->fetchAll(); # 取得該分頁的資料
     <div class="col-10">
       <h4 class="card-header">器材列表</h4>
     </div>
-    <div class="col-2 card-header d-flex align-items-center justify-content-center fs-4">
+    <div class="col-2 card-header d-flex align-items-center justify-content-center fs-5">
       <a href="products_add.php" class="nav-link">
         <span class="d-none d-sm-block"> 
-        <i class="fa-solid fa-square-plus fa-xl mx-3 fs-4"></i>新增器材</span>
+        <i class="fa-solid fa-square-plus fa-xl mx-3 fs-5"></i>新增器材</span>
       </a>
     </div>
   </div>
@@ -121,11 +124,17 @@ $rows = $pdo->query($sql)->fetchAll(); # 取得該分頁的資料
             </a>
           </li>
 
-          <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+          <?php for ($i = 1; $i <= $totalPages; $i++): 
+                if ($i >= 1 and $i <= $totalPages):
+                $qs = array_filter($_GET); # 去除值是空字串的項目
+                $qs['page'] = $i;
+            ?>
             <li class="page-item <?= $i==$page ? 'active' : '' ?>">
-              <a style="height = 10px" class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+              <a style="height = 10px" class="page-link" href="?<?= http_build_query($qs) ?>"><?= $i ?></a>
             </li>
-          <?php endfor; ?>
+          <?php 
+          endif;
+        endfor; ?>
 
           <li class="page-item <?= $page==$totalPages ? 'disabled' : '' ?>">
             <a class="page-link" href="?page=<?= $page + 1 ?>">
