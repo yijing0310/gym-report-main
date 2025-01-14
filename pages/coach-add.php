@@ -2,6 +2,12 @@
 $title = "增加教練資料";
 $pageName = "coach-add";
 
+// 取得目前最大的教練編號
+$sql = "SELECT MAX(CAST(SUBSTRING(coach_number, 2) AS UNSIGNED)) as max_num FROM coaches";
+$result = $pdo->query($sql)->fetch();
+$next_num = str_pad(($result['max_num'] + 1), 5, '0', STR_PAD_LEFT);
+$next_number = 'C' . $next_num;
+
 ?>
 <?php include __DIR__ . '/includes/html-header.php'; ?>
 <?php include __DIR__ . '/includes/html-sidebar.php'; ?>
@@ -32,6 +38,12 @@ $pageName = "coach-add";
                 <div class="col-md-10">
                     <input class="form-control" type="text" id="name" name="name">
                     <div class="form-text"></div>
+                </div>
+            </div>
+            <div class="mb-4 row">
+                <label for="coach_number" class="col-md-2 col-form-label">教練員工編號</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="text" id="coach_number" name="coach_number" readonly>
                 </div>
             </div>
             <div class="mb-4 row">
@@ -110,6 +122,7 @@ $pageName = "coach-add";
     <?php include __DIR__ . '/includes/html-content wrapper-end.php'; ?>
     <?php include __DIR__ . '/includes/html-script.php'; ?>
     <script>
+        const coachNumberField = document.querySelector('#coach_number');
         const nameField = document.querySelector('#name');
         const emailField = document.querySelector('#email');
         const myModal = new bootstrap.Modal('#exampleModal');
@@ -119,6 +132,11 @@ $pageName = "coach-add";
             const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return pattern.test(email);
         }
+
+        // 在頁面載入時設定教練編號
+        document.addEventListener('DOMContentLoaded', function () {
+            coachNumberField.value = '<?= $next_number ?>';
+        });
 
         // 前端 JavaScript
         const sendData = e => {
@@ -159,7 +177,7 @@ $pageName = "coach-add";
                                 const emailModal = new bootstrap.Modal('#emailModal');
                                 emailModal.show();
                             } else {
-                                alert('資料沒有修改');
+                                alert('資料新增失敗');
                             }
                         }
                     })

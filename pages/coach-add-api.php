@@ -28,16 +28,18 @@ try {
     if ($inactive_coach) {
         // 如果是 inactive 的 email，更新該筆資料
         $sql = "UPDATE coaches SET 
-            name = ?, 
-            specialty = ?, 
-            phone = ?, 
-            profile_image = ?, 
-            bio = ?,
-            status = 'active' 
-            WHERE coach_id = ?";
+        name = ?,
+        coach_number = ?,
+        specialty = ?,
+        phone = ?,
+        profile_image = ?,
+        bio = ?,
+        status = 'active'
+        WHERE coach_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             $_POST['name'],
+            $_POST['coach_number'],
             $_POST['specialty'],
             $_POST['phone'],
             $_POST['profile_image'],
@@ -46,21 +48,37 @@ try {
         ]);
     } else {
         // 完全新的 email，執行插入
-        $sql = "INSERT INTO coaches (name, specialty, email, phone, profile_image, bio, status) 
-                VALUES (?, ?, ?, ?, ?, ?, 'active')";
+        $sql = "INSERT INTO coaches (
+            name,
+            coach_number,
+            specialty,
+            email,
+            phone,
+            profile_image,
+            bio,
+            status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             $_POST['name'],
+            $_POST['coach_number'],
             $_POST['specialty'],
             $_POST['email'],
             $_POST['phone'],
             $_POST['profile_image'],
-            $_POST['bio']
+            $_POST['bio'],
+            'active'
         ]);
+
     }
     $output['success'] = true;
 } catch (PDOException $ex) {
-    $output['error'] = '新增/更新失敗';
+    error_log('SQL Error: ' . $ex->getMessage());
+    error_log('Error Code: ' . $ex->getCode());
+    error_log('Error Info: ' . print_r($ex->errorInfo, true));
+    $output['error'] = '新增/更新失敗: ' . $ex->getMessage();
 }
+
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

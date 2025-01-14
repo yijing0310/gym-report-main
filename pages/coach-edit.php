@@ -47,9 +47,9 @@ if (empty($r)) {
         <form onsubmit="sendData(event)">
             <input type="hidden" name="coach_id" value="<?= $r['coach_id'] ?>">
             <div class="mb-4 row">
-                <label for="name" class="col-md-2 col-form-label">編號</label>
+                <label for="name" class="col-md-2 col-form-label">教練員工編號</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" disabled value="<?= $r['coach_id'] ?>">
+                    <input type="text" class="form-control" disabled value="<?= $r['coach_number'] ?>">
                 </div>
             </div>
             <div class="mb-4 row">

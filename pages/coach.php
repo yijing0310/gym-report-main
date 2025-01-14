@@ -9,10 +9,9 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 $where = " WHERE status = 'active' ";
-
 if ($keyword) {
     $keyword_ = $pdo->quote("%{$keyword}%");
-    $where .= " AND (name LIKE $keyword_)";
+    $where .= " AND (name LIKE $keyword_ OR coach_number LIKE $keyword_)";
 }
 
 $t_sql = "SELECT COUNT(1) FROM coaches $where";
@@ -119,6 +118,7 @@ if ($totalRows > 0) {
                 <tr>
                     <th><i class="fa-solid fa-trash"></i></th>
                     <th>教練id</th>
+                    <th>教練員工編號</th>
                     <th>教練姓名</th>
                     <th>教練專長</th>
                     <th>電子郵件</th>
@@ -137,6 +137,7 @@ if ($totalRows > 0) {
                             </a>
                         </td>
                         <td><?= $r['coach_id'] ?></td>
+                        <td><?= $r['coach_number'] ?></td>
                         <td><?= htmlentities($r['name']) ?></td>
                         <td><?= $r['specialty'] ?></td>
                         <td><?= $r['email'] ?></td>
