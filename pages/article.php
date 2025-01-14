@@ -104,6 +104,11 @@ $r = $pdo->query($all_sql)->fetch();
           <!--/ Basic Pagination -->
         </div>
       </div>
+      <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-secondary">Left</button>
+          <button type="button" class="btn btn-outline-secondary">Middle</button>
+          <button type="button" class="btn btn-outline-secondary">Right</button>
+      </div>
       <!-- 搜尋 -->
       <div class="col-lg-3 me-5  d-flex align-items-center justify-content-end">
         <form class="d-flex  ">
@@ -146,6 +151,17 @@ $r = $pdo->query($all_sql)->fetch();
           <td title="<?=$v['author_id']?>"><?=$v['author_id']?></td>
           <td style="max-width: 150px" title="<?=$v['created_at']?>"><?=$v['created_at']?></td>
           <td style="max-width: 150px" title="<?=$v['updated_at']?>"><?=$v['updated_at']?></td>
+          <!-- <td>
+            <span class="badge bg-label-<?= $v['uploadStatus'] == 1 ? 'primary' : 'secondary' ?> me-1" 
+                  style="cursor: pointer;" 
+                  data-article-id="<?= $v['article_id'] ?>" 
+                  data-status="<?= $v['uploadStatus'] ?>"
+                  class="toggle-upload-status">
+              <?= $v['uploadStatus'] == 1 ? '已發布' : '未發布' ?>
+            </span>
+          </td> -->
+
+          
           <td>
             <?php if ($v['uploadStatus']== 1) :?>
               <span class="badge bg-label-primary  me-1">已發布</span>
@@ -236,6 +252,9 @@ $r = $pdo->query($all_sql)->fetch();
 </div>
 <?php include __DIR__ . '/includes/html-content wrapper-end.php'; ?>
 <?php include __DIR__ . '/includes/html-script.php'; ?>
+
+
+
 
 <script>
     const viewButtons = document.querySelectorAll('#viewBtn');
