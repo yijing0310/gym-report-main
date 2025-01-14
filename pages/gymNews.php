@@ -123,7 +123,7 @@ $r = $pdo->query($all_sql)->fetch();
           <th>ID</th>
           <th>標題</th>
           <th>內容</th>
-          <th>作者</th>
+          <th>發布者</th>
           <th>創建時間</th>
           <th>更新時間</th>
           <th>發布狀態</th>
@@ -189,13 +189,13 @@ $r = $pdo->query($all_sql)->fetch();
                   </div>
                 </div>
                 <div class="row mb-6">
-                  <label class="col-sm-2 col-form-label" for="basic-default-author">作者工號</label>
+                  <label class="col-sm-2 col-form-label" for="basic-default-author">發布者</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control " id="basic-default-author" name="author_id" placeholder="請輸入作者工號"   value="" disabled>
+                    <input type="text" class="form-control " id="basic-default-author" name="author_id" placeholder="請輸入工號"   value="" disabled>
                   </div>
                 </div>
                 <div class="row mb-6">
-                  <label class="col-sm-2 col-form-label" for="basic-default-content">文章內容</label>
+                  <label class="col-sm-2 col-form-label" for="basic-default-content">最新消息內容</label>
                   <div class="col-sm-10">
                     <textarea id="basic-default-content" class="form-control" rows="5" name="content" disabled></textarea>
                     <div id="contentError"></div>

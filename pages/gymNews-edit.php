@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/includes/init.php';?>
 <?php
-$title = "最新消息修改";
+$title = "編輯最新消息";
 $pageName = "gymNews-edit"; 
 $news_id = empty($_GET['news_id'])? 0 : intval($_GET['news_id']);
 if(empty($news_id)){
